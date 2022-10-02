@@ -921,10 +921,7 @@ p_circles_ilr +
 ::: {.incremental}
 - Toutes les transformations log-ratio sont construites à partir des [log-composantes]{.fragment .fade-in}
 - On peut donc toujours écrire $\xlr(\vect{x}) = \vect{A} \log(\vect{x})$ pour une matrice $\vect{A}$ bien choisie
-
 :::
-
-. . . 
 
 ::::: {.columns}
 
@@ -1066,7 +1063,7 @@ Les coordonnées PLR se comprennent (à un facteur multiplicatif près) comme la
 
 ## Balances {.smaller}
 
-- Les balances sont utilisées lorsque les composantes sont organisées dans un **arbre binaire**. 
+- Utile lorsque les composantes sont organisées dans un **arbre binaire**. 
 
 . . .
 
@@ -1283,6 +1280,7 @@ $$
 
 **Preuve**
 
+::: {.callout-note appearance="minimal"}
 ::: {.incremental}
 - La première affirmation vient de $\vect{G}_D = \vect{V} \vect{I}_{D-1} \vect{V}^T$ pour n'importe quel $\vect{V}$. 
 - L'écriture $\text{ilr}_\vect{V}^{-1} \circ f_{\vect{A}^\star} \circ \text{ilr}_\vect{V}$ prouve que $\vect{x} \mapsto \vect{A} \boxdot \vect{x}$ est inversible si et seulement $\vect{A}^\star$ est inversible, d'inverse $\text{ilr}_\vect{V}^{-1} \circ f_{{\vect{A}^\star}^{-1}} \circ \text{ilr}_\vect{V}$
@@ -1298,6 +1296,7 @@ $$
 \end{align*}
 $$
 ::: 
+:::
 
 ## Applications linéaires entre simplexes {.smaller}
 
