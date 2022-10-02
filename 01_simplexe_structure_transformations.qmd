@@ -1,6 +1,6 @@
 ---
 title: "Simplexe, structure et transformations"
-author: "Mahendra Mariadassou"
+author: "Mahendra Mariadassou<br>INRAE - MaIAGE<br>JES 2022"
 bibliography: biblio.bib
 link-citations: true
 execute: 
@@ -8,6 +8,10 @@ execute:
 format: 
   revealjs:
     mermaid-format: png
+    slide-number: true
+    chalkboard: 
+      buttons: true
+    preview-links: auto
 editor: visual
 ---
 
@@ -83,7 +87,7 @@ $$
 
 ::: columns
 ::: {.column width="25%"}
-![Simplexe $\CS^3$](figures/S3.png){fig-align="left" width="90%"}
+![Simplexe $\CS^3$, issu de [Wikipedia](https://fr.wikipedia.org/wiki/Simplexe)](figures/S3.png){fig-align="left" width="90%"}
 :::
 
 ::: {.column width="15%"}
@@ -1305,8 +1309,20 @@ $$
 Cette dernière est bien définie et ne dépend pas de la décomposition choisie pour $\vect{A}$. 
 :::
 
+:::
 
+# Conclusion
 
+## Messages à retenir
+
+::: {.incremental}
+- Les compositions vivent dans le **simplexe** $\CS^D$
+- $\CS^D$ est un **espace euclidien** avec sa propre **géométrie**
+  - relativement contre-intuitive (courbure négative)
+- Les **transformations log-ratio** permettent de plonger $\CS^D$ dans un espace euclidien:
+  - alr est la plus simple à comprendre
+  - clr, ilr sont les plus *simples* du point de vue géométrique
+- La **philosophie de la transformation** permet de jongler entre $\RR^D$ / $\RR^{D-1}$ et $\CS^D$
 :::
 
 ## Réferences
