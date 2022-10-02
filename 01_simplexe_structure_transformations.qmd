@@ -154,12 +154,33 @@ La géométrie d'Aitchison permet de doter $\CS^D$ d'une structure d'espace vect
 ### Opérations dans le simplexe
 
 Soient $\vect{x}, \vect{y} \in \CS^D$ et $\alpha \in \RR$, 
+
+::::: {.columns}
+:::: {.column width="50%"}
+::: {.fragment}
 $$
 \begin{align*}
- \vect{x} \oplus \vect{y} & = \left[ \frac{x_1 y_1}{\sum_{j=1}^D x_j y_j}, \dots, \frac{x_D y_D}{\sum_{j=1}^D x_j y_j} \right] = \CC(x_1 y_1, \dots, x_D y_D)\\
- \alpha \odot \vect{x} & = \left[ \frac{x_1^\alpha}{\sum_{j=1}^D x_j^\alpha}, \dots, \frac{x_1^\alpha}{\sum_{j=1}^D x_j^\alpha} \right] = \CC(x_1^\alpha, \dots, x_D^\alpha)
+ \vect{x} \oplus \vect{y} & = \left[ \frac{x_1 y_1}{\sum_{j=1}^D x_j y_j}, \dots, \frac{x_D y_D}{\sum_{j=1}^D x_j y_j} \right] \\
+ & = \CC(x_1 y_1, \dots, x_D y_D)
 \end{align*}
-$$ 
+$$
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.fragment}
+$$
+\begin{align}
+ \alpha \odot \vect{x} & = \left[ \frac{x_1^\alpha}{\sum_{j=1}^D x_j^\alpha}, \dots, \frac{x_1^\alpha}{\sum_{j=1}^D x_j^\alpha} \right] \\
+ & = \CC(x_1^\alpha, \dots, x_D^\alpha)
+\end{align} 
+$$
+:::
+::::
+
+:::::
+
+
 en utilisant la convention $0^0 = 0$.
 :::
 
@@ -167,19 +188,12 @@ en utilisant la convention $0^0 = 0$.
 
 Illustrons les opérateurs $\oplus$ et $\odot$ avec $\vect{a} = (0.15, 0.35, 0.5)$, $\vect{b} = (0.35, 0.15, 0.5)$ et:
 
-::: columns
-::: {.column width="50%"}
+::::: columns
+:::: {.column width="50%"}
+::: {.fragment}
 **Perturbation**:
 
 $\vect{c} = \vect{a} \oplus \vect{b}$
-:::
-
-::: {.column width="50%"}
-**Powering**:
-
-$\vect{d} = 2 \odot \vect{a}$, $\vect{e} = 0.5 \odot \vect{a}$ et $\vect{f} = -2 \odot \vect{a}$
-:::
-:::
 
 ```{r}
 #| echo: false
@@ -217,14 +231,36 @@ p_mult <- ggtern(operations[c(1, 4:6), ], aes(x = x, y = y, z = z, label = name)
 ```
 
 ```{r}
-#| label: fig-operations
+#| label: fig-addition
 #| fig-width: 7
 #| fig-height: 7
-#| layout-ncol: 2
 #| fig-cap: ""
 p_add
+```
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.fragment}
+**Powering**:
+
+$\vect{d} = 2 \odot \vect{a}$, $\vect{e} = 0.5 \odot \vect{a}$ et $\vect{f} = -2 \odot \vect{a}$
+
+```{r}
+#| label: fig-multiplication
+#| fig-width: 7
+#| fig-height: 7
+#| fig-cap: ""
 p_mult
 ```
+
+:::
+::::
+:::::
+
+
+
+
 
 ## Espace vectoriel {.smaller}
 
@@ -256,8 +292,9 @@ La restriction de $\CS^D$ aux compositions à composantes non-nulles permet de b
 
 ## Espace euclidien {.smaller}
 
-$\CS^D$ peut être doté d'un produit scalaire pour le transformer en espace euclidien
+$\CS^D$ peut être doté d'un produit scalaire pour le transformer en espace euclidien.
 
+::: {.fragment fragment-index=1}
 ::: {#def-prod-scalaire-ait}
 ### Produit scalaire 
 
@@ -266,17 +303,17 @@ $$
 <\vect{x}, \vect{y}>_A = \frac{1}{2D} \sum_{j=1}^D \sum_{j' = 1}^D \log \frac{x_j}{x_{j'}} \log \frac{y_j}{y_{j'}}. 
 $$
 :::
+:::
 
-. . . 
-
+::: {.fragment fragment-index=2}
 ::: {#prp-prod-scalaire-ait}
 ### Norme d'Aitchison
 
-Le produit scalaire $<., .>_A$ induit la **norme de Aitchison** $\parallel . \parallel_A$ et la **distance de Aitchison** $d_A(., .)$ définies sur $\CS^D$ par:
+Le produit scalaire $<., .>_A$ induit la [**norme de Aitchison**]{.fragment .highlight-red fragment-index=3} $\parallel . \parallel_A$ et la [**distance de Aitchison**]{.fragment .highlight-red fragment-index=4} $d_A(., .)$ définies sur $\CS^D$ par:
 
 :::: {.columns}
-
 ::: {.column width="45%"}
+::: {.fragment fragment-index=3}
 $$
 \begin{align}
 \parallel \vect{x} \parallel_A & = \sqrt{<\vect{x}, \vect{x}>_A} \\
@@ -284,9 +321,11 @@ $$
 \end{align}
 $$
 :::
+:::
 
 
 ::: {.column width="55%"}
+::: {.fragment fragment-index=4}
 $$
 \begin{align}
 d_A(\vect{x}, \vect{y}) & = \parallel \vect{x} \ominus \vect{y} \parallel_A \\
@@ -294,12 +333,11 @@ d_A(\vect{x}, \vect{y}) & = \parallel \vect{x} \ominus \vect{y} \parallel_A \\
 \end{align}
 $$
 :::
+:::
 
 ::::
 
-
-
-
+:::
 :::
 
 ## Espace euclidien (II) {.smaller}
@@ -391,11 +429,11 @@ lines <- tibble(slope     = 1,
 
 ## Droites dans le simplexe {.smaller}
 
-On peut également définir des droites parallèles et orthogonales. 
+On peut également définir des droites [parallèles]{.fragment .highlight-red fragment-index=2} et [orthogonales]{.fragment .highlight-red fragment-index=3}. 
 
 ::::: {.columns}
 :::: {.column width="50%"}
-::: {.fragment}
+::: {.fragment fragment-index=2}
 ::: {#def-parallele}
 ### Parallélisme
 Deux droites $D_{\vect{a}, \vec{\vect{u}}}$ et $D_{\vect{b}, \vec{\vect{v}}}$ sont parallèles ssi les compositions $\vect{u}$ et $\vect{v}$ sont colinéaires $\Leftrightarrow \exists \alpha \in \RR, \vect{v} = \alpha \odot \vect{u}$
@@ -426,7 +464,7 @@ p_lines
 
 
 :::: {.column width="50%"}
-::: {.fragment}
+::: {.fragment fragment-index=3}
 ::: {#def-orthogonale}
 ### Orthogonalité
 Deux droites $D_{\vect{a}, \vec{\vect{u}}}$ et $D_{\vect{b}, \vec{\vect{v}}}$ sont orthogonales si les compositions $\vect{u}$ et $\vect{v}$ sont orthogonales, c'est à dire si $<\vect{u}, \vect{v}>_A = 0$. 
@@ -563,20 +601,30 @@ Aussi utilisé pour définir des formes (carrés, triangles, cercles, etc) dans 
 
 ## La philosophie de la transformation
 
-::: {.callout-important}
+:::: {.callout-important appearance="simple"}
 
-Pour être **utile**, les transformations xlr doivent idéalement préserver la structure de $\CS^D$:
+Pour être **utile**, les transformations xlr doivent idéalement la structure de $\CS^D$:
+
+::: {.fragment fragment-index=2}
+**Espace vectoriel**
 
 - $\xlr(\vect{x} \oplus \vect{y}) = \xlr(\vect{x}) + \xlr(\vect{y})$
 - $\xlr(\alpha \odot \vect{x}) = \alpha \xlr(\vect{x})$
+:::
+
+::: {.fragment fragment-index=4}
+**Espace euclidien**
+
 - $\langle \vect{x}, \vect{y} \rangle_A = \xlr(\vect{x})^T \xlr(\vect{y})$
 - $\parallel \vect{x} \parallel_A = \parallel \xlr(\vect{x}) \parallel$
 
 :::
 
-. . . 
+::::
 
-On cherche un **morphisme** de $(\CS^D, \oplus, \odot)$ dans $(\RR^D, +, \times)$. 
+::: {.fragment fragment-index=3}
+On cherche un [**(iso)morphisme**]{.fragment .highlight-red fragment-index=3} [**isométrique**]{.fragment .fade-in fragment-index=5} de $\CS^D$ dans $\RR^D$
+:::
 
 ## Coordonnées alr {.smaller}
 
@@ -592,7 +640,7 @@ $$
 . . .
 
 ::: {#prp-alr}
-$\alr_j$ est un *isomorphisme* de $(\CS^{D}, \oplus, \odot)$ dans $(\RR^{D-1}, +, \times)$. En particulier, pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
+$\alr_j$ est un **isomorphisme** de $(\CS^{D}, \oplus, \odot)$ dans $(\RR^{D-1}, +, \times)$. En particulier, pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
 $$
 \alr(\vect{x} \oplus \vect{y}) = \text{alr}_j(\vect{x}) + \text{alr}_j(\vect{y}) \quad \text{et} \quad \alr(\alpha \odot \vect{x}) = \alpha \text{alr}_j(\vect{x})
 $$
@@ -708,7 +756,7 @@ $$
 . . .
 
 ::: {#prp-clr}
-$\clr$ est un *morphisme isométrique*. Pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
+$\clr$ est un **morphisme isométrique**. Pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
 $$
 \begin{align}
 \clr(\vect{x} \oplus \vect{y}) = \text{clr}_j(\vect{x}) + \text{clr}_j(\vect{y}) & \quad \text{et} \quad \clr(\alpha \odot \vect{x}) = \alpha \text{clr}_j(\vect{x}) \\
@@ -750,7 +798,7 @@ C'est le principe des transformations $\ilr$ [@egozcue2003isometric]
 
 ## Coordonnées ilr {.smaller}
 
-Soit $\mathcal{V} = (\vect{v}_1, \dots, \vect{v}_{D-1})$ une base orthonormale de $H$ et $\vect{V} = \left[ \vect{v}_1, \dots, \vect{v}_{D_1} \right]$ la matrice correspondante. 
+Soit $\mathcal{V} = (\vect{v}_1, \dots, \vect{v}_{D-1})$ une base orthonornormée de $H$ et $\vect{V} = \left[ \vect{v}_1, \dots, \vect{v}_{D_1} \right]$ la matrice correspondante. 
 
 ::: {#def-ilr}
 La transformation ilr de base $\vect{V}$ est définie par:
@@ -764,7 +812,7 @@ $$
 . . .
 
 ::: {#prp-ilr}
-$\ilr_V$ est un *isomorphisme isométrique* de $\CS^D$ dans $\RR^{D-1}$ vérifie les même propriétés que la transformation $\clr$ (cf @prp-clr)
+$\ilr_V$ est un **isomorphisme isométrique** de $\CS^D$ dans $\RR^{D-1}$ et vérifie les même propriétés que la transformation $\clr$ (cf @prp-clr)
 :::
 
 . . .
@@ -783,10 +831,12 @@ où la fonction exponentielle est appliquée terme à terme à $\vect{x}$.
 
 :::: {.column width="50%"}
 
-- $\vect{V}$ est une matrice de contraste: chaque vecteur $\vect{v}_j$ vérifie $v_{j1} + \dots + v_{jD} = 0$. Le produit scalaire $\vect{v}_j^T \text{clr}(\vect{x})$ définit donc un contraste sur les composantes de $\log \vect{x}$.
+- $\vect{V}$ est une **matrice de contraste:** [chaque vecteur $\vect{v}_j$ vérifie $v_{j1} + \dots + v_{jD} = 0$. Le produit scalaire $\vect{v}_j^T \text{clr}(\vect{x})$ définit donc un contraste sur les composantes de $\log \vect{x}$.]{.fragment .fade-in}
 
 ::: {.fragment}
 - On peut compléter $\vect{V}$ pour avoir une matrice orthogonale dans $\RR^D$
+:::
+::: {.fragment}
 $$
 \begin{align}
 \vect{V}^\star & = [\vect{V}\quad  \vect{1}_D/\sqrt{D}] \in \mathbb{O}_D \\
@@ -845,7 +895,7 @@ Les coordonnées $\ilr$ sont moins interprétables que les coordonnées $\clr$ e
 . . .
 
 ::: {.callout-warning appearance="simple"}
-Les coordonnées $\ilr$ dépendent de $V$ et il faut donc choisir une **base pertinente**. 
+Les coordonnées $\ilr$ dépendent de $\vect{V}$ et il faut donc choisir une **base pertinente**. 
 :::
 
 . . . 
@@ -879,13 +929,16 @@ p_circles_ilr +
 ::::: {.columns}
 
 :::: {.column width="33%"}
+::: {.fragment}
 Pour $\alr_D$, 
 $$
-\vect{A} = \vect{F}_D = [\vect{I}_{D-1} \quad -\vect{1}_{D-1}^T]
+\vect{A} = \vect{F}_D = [\vect{I}_{D-1} \; -\vect{1}_{D-1}^T]
 $$
+:::
 ::::
 
 :::: {.column width="33%"}
+::: {.fragment}
 Pour $\clr$, 
 $$
 \begin{align}
@@ -894,13 +947,16 @@ $$
          & = \vect{I}_D - \vect{1}_{D}\vect{1}_{D}^T/D 
 \end{align}
 $$
+:::
 ::::
 
 :::: {.column width="33%"}
+::: {.fragment}
 Pour $\ilr_V$, 
 $$
 \vect{A} = \vect{V}^T \vect{G}_D = \vect{V}^T
 $$
+:::
 ::::
 
 :::::
@@ -954,10 +1010,12 @@ où $\mathbf{K}_D=\begin{bmatrix} \mathbf{I}_{D-1} - \mathbf{1}_{D-1}\mathbf{1}_
 
 ## Base ilr
 
-Il est nécessaire de choisir une base orthonormée de $H$. Nous considérons ici deux stratégies:
+Il est nécessaire de choisir une **base orthonormée** de $H$. Nous considérons ici deux stratégies:
 
+::: {.incremental}
 - le pivot, obtenu en appliquant l'orthogonalisation de Gram-Schmidt à la base canonique [@filzmoser2018applied]
 - les partitions binaires, si on dispose d'un arbre binaire sur les composantes [@egozcue2005groups]
+:::
 
 . . .
 
@@ -1001,7 +1059,7 @@ $$
 correspondant aux couples $(J_+, J_-) = (\{j\}, \{j+1, \dots, D\})$. 
 
 ::: {.fragment}
-Les coordonnées PLR se comprennent (à un facteur multiplicatif près) comme la moyenne des log-ratio $\log \frac{x_j}{x_{j+1}}$, \dots, $\log \frac{x_j}{x_D}$. 
+Les coordonnées PLR se comprennent (à un facteur multiplicatif près) comme la moyenne des log-ratio $\log \frac{x_j}{x_{j+1}}, \dots, \log \frac{x_j}{x_D}$. 
 ::: 
 
 :::
@@ -1014,7 +1072,7 @@ Les coordonnées PLR se comprennent (à un facteur multiplicatif près) comme la
 
 ::: {#prp-balance-lr}
 ### Balance
- Soit $\mathcal{T}$ un arbre binaire sur ${1, \dots, D}$. Chacun des $D-1$ noeuds internes $n_1, \dots, n_{D-1}$ définit deux sous ensembles de composantes $J_{i,+}$ et $J_{i,-}$ (liés aux sous-arbres gauche et droit). La base pivot $\vect{V} = [\vect{v}_1\, \dots\, \vect{v}_{D-1}]$ associée à $\mathcal{T}$ est définie par les vecteurs unitaires:
+ Soit $\mathcal{T}$ un arbre binaire sur ${1, \dots, D}$. Chacun des $D-1$ noeuds internes $n_1, \dots, n_{D-1}$ définit deux sous ensembles de composantes $J_{i,g}$ et $J_{i,d}$ (liés aux sous-arbres *gauche* et *droit*). La base pivot $\vect{V} = [\vect{v}_1\, \dots\, \vect{v}_{D-1}]$ associée à $\mathcal{T}$ est définie par les vecteurs unitaires:
 $$
 v_{ij} = \begin{cases}
         \frac{\alpha_i}{|J_{i,g}|} & \text{si } j \in J_{i,g} \\
@@ -1105,10 +1163,10 @@ $$
 
 # Applications linéaires
 
-## Pourquoi faire ?  {.smaller}
+## Pourquoi faire ? {.smaller}
 
-::::: {.columns}
-:::: {.column width="80%"}
+<!-- ::::: {.columns} -->
+<!-- :::: {.column width="80%"} -->
 
 - Pour définir des applications entre simplexes
 - Pour définir des applications entre simplexes et espaces euclidiens usuels
@@ -1116,21 +1174,24 @@ $$
 - Comme brique de base pour faire des méthodes d'analyse de données
 
 [Comme pour géométrie de Aitchison, les applications linéaires utilisent la **philosophie de la transformation**.]{.fragment}
-::::
+<!-- :::: -->
 
-:::: {.column width="20%"}
+<!-- :::: {.column width="20%"} -->
 
-::: {.fragment}
+<!-- ::: {.fragment} -->
+
+. . . 
 ```{mermaid}
-flowchart TD
+%%| fig-width: 12
+flowchart LR
   A[Composition] -- xlr --> B(Vecteur)
   B -- application --> C(Vecteur)
   C -- xlr inverse --> D[Composition]
 ```
-:::
+<!-- ::: -->
 
-::::
-:::::
+<!-- :::: -->
+<!-- ::::: -->
 
 ## Endomorphismes du simplexe $\CS^D$ {.smaller}
 
@@ -1185,10 +1246,12 @@ $$
 ## Propriétés de $\vect{A}$ {.smaller}
 
 ::: {#prp-matrice-double-centrée}
-Soit $\mathcal{A}_D$ l'ensemble des matrices carré de taille $D$ à somme nulle en ligne et en colonne. Toute matrice $\vect{A}$ de $\mathcal{A}_D$ peut être représentée sous la forme $\vect{A} = \vect{V} \vect{A}^\star \vect{V}^T$ avec $\vect{A}^\star$ carrée de taille $D-1$ et $\vect{V}$ une matrice de contrastes. 
+Soit $\mathcal{A}_D$ l'ensemble des matrices carré de taille $D$ à somme nulle en ligne et en colonne. Toute matrice $\vect{A}$ de $\mathcal{A}_D$ peut être décomposée sous la forme $\vect{A} = \vect{V} \vect{A}^\star \vect{V}^T$ avec $\vect{V}$ une matrice de contrastes et $\vect{A}^\star = \vect{V}^T \vect{A} \vect{V}$ carrée de taille $D-1$. 
 :::
 
-::: {.callout-note}
+. . . 
+
+::: {.callout-note appearance="simple"}
 $\mathcal{A}_D$ est parfois appelé l'ensemble des matrices *double centrées*. 
 :::
 
@@ -1201,7 +1264,9 @@ $$
 $$
 :::
 
-::: {.callout-note}
+. . .
+
+::: {.callout-note appearance="simple"}
 Si $\vect{A} \notin \mathcal{A}_D$, on peut bien sûr écrire $\text{clr}^{-1}\left( \vect{A} \text{clr}(\vect{x})\right)$ mais on a alors $\text{clr}^{-1}\left( \vect{A} \text{clr}(\vect{x})\right) = \underbrace{\vect{G}_D \vect{A} \vect{G}_D}_{\in \mathcal{A}_D} \boxdot \vect{x}$
 :::
 
@@ -1216,11 +1281,15 @@ $$
 
 . . .
 
-::: {.proof}
+**Preuve**
 
+::: {.incremental}
 - La première affirmation vient de $\vect{G}_D = \vect{V} \vect{I}_{D-1} \vect{V}^T$ pour n'importe quel $\vect{V}$. 
 - L'écriture $\text{ilr}_\vect{V}^{-1} \circ f_{\vect{A}^\star} \circ \text{ilr}_\vect{V}$ prouve que $\vect{x} \mapsto \vect{A} \boxdot \vect{x}$ est inversible si et seulement $\vect{A}^\star$ est inversible, d'inverse $\text{ilr}_\vect{V}^{-1} \circ f_{{\vect{A}^\star}^{-1}} \circ \text{ilr}_\vect{V}$
 - Il reste donc à prouver que ${\vect{A}^\star}^{-1} = \left(\vect{A}^{-1}\right)^\star$:
+:::
+
+::: {.fragment}
 $$
 \begin{align*}
  \vect{A}^\star \left(\vect{A}^{-1}\right)^\star &=  \vect{V}^T \vect{A} \vect{V} \vect{V}^T \vect{A}^{-1} \vect{V} \\
@@ -1228,8 +1297,7 @@ $$
  & = \vect{V}^T (\vect{A} + \vect{1}_D \vect{1}_D^T) \vect{V} \vect{V}^T (\vect{A} + \vect{1}_D \vect{1}_D^T)^{-1} \vect{V} = \vect{I}_{D-1}
 \end{align*}
 $$
- 
-:::
+::: 
 
 ## Applications linéaires entre simplexes {.smaller}
 
@@ -1322,7 +1390,7 @@ Cette dernière est bien définie et ne dépend pas de la décomposition choisie
 - Les **transformations log-ratio** permettent de plonger $\CS^D$ dans un espace euclidien:
   - alr est la plus simple à comprendre
   - clr, ilr sont les plus *simples* du point de vue géométrique
-- La **philosophie de la transformation** permet de jongler entre $\RR^D$ / $\RR^{D-1}$ et $\CS^D$
+- La **philosophie de la transformation** permet de jongler entre $\RR^D$ / $\RR^{D-1}$ et $\CS^D$ et définir simplement des fonctions sur $\CS^D$.
 :::
 
 ## Réferences
