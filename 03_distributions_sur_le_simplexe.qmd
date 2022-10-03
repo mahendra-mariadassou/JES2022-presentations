@@ -1,0 +1,393 @@
+---
+title: "Distributions sur le simplexe"
+author: "Mahendra Mariadassou"
+date: "JES 2022 - Fréjus"
+institute: "INRAE - MaIAGE"
+bibliography: biblio.bib
+link-citations: true
+from: markdown+emoji
+execute: 
+  cache: true
+  echo: false
+format: 
+  beamer:
+    slide-number: true
+    incremental: true
+    aspectratio: 169
+    number-section: true
+    keep-tex: true
+    include-in-header:
+      - commandes.tex  
+  revealjs:
+    mermaid-format: png
+    slide-number: true
+    chalkboard: 
+      buttons: true
+    preview-links: auto
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(ggtern)
+```
+
+# Définitions et résultats techniques
+
+## Moyenne et variance dans le simplexe
+
+La moyenne et la variance sont définies à l'aide de la **philosophie de la transformation**
+
+\begin{definition}
+Soit $\vect{X}$ une composition aléatoire. La **moyenne** de $\vect{X}$ dans le simplexe, aussi appelée \emph{centre de la composition}, et sa matrice de **(clr)-covariance** sont données par: 
+$$
+ {\mathbb E}^\oplus[\vect{X}] = \text{clr}^{-1} \left( {\mathbb E}[\text{clr}(\vect{X})]\right) \quad \text{ et } \quad {\mathbb V}^\oplus[\vect{X}] = {\mathbb V}[\text{clr}(\vect{X})] = {\mathbb V}[\vect{G}_D \log(\vect{X})].
+$$
+\end{definition}
+
+. . .
+
+::: {.callout-note appareance="simple"}
+- ${\mathbb E}^\oplus[\vect{X}]$ est à valeurs dans $\CS^D$
+- ${\mathbb V}^{\oplus}[\vect{X}]$ est à valeurs dans $\mathcal{A}_D$, l'espace des matrices doublement centrées. 
+:::
+
+## Inversion dans $\mathcal{A}_D$
+
+\begin{definition}
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$. $\boldsymbol{\Sigma}$ est dite sous \emph{forme canonique} sur le simplexe si elle est centrée en ligne et en colonne, c'est à dire si $\boldsymbol{\Sigma} = \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D$. 
+\end{definition}
+
+. . . 
+
+::: {.callout-note appearance="minimal"}
+$\vect{G}_D$ est de rang $D-1$ donc les matrices de clr-covariance ont un rang $\leq D-1$. Il faut donc redéfinir la notion d'inverse pour ces matrices. 
+:::
+
+. . .
+
+\begin{definition}
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$ sous forme canonique. $\boldsymbol{\Sigma}$ est dite \textbf{inversible} sur le simplexe s'il existe une base $\vect{V}$ telle que $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$ est inversible. Dans ce cas, l'inverse de $\boldsymbol{\Sigma}$ dans le simplexe est $\boldsymbol{\Sigma}^{-1} = \vect{V}{\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T$. 
+\end{definition}
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+ On impose $\boldsymbol{\Sigma}$ sous forme canonique uniquement pour alléger les notations, sinon:
+$$
+ \vect{V}^T \boldsymbol{\Sigma} \vect{V} = \vect{V}^T \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D \vect{V}.
+$$ 
+::: 
+
+## Inversion dans $\mathcal{A}_D$ (II)
+
+L'inversibilité ne dépend pas du choix de la base $\vect{V}$. 
+
+. . .
+
+\begin{theorem}
+
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique inversible dans le simplexe. L'inverse de $\boldsymbol{\Sigma}$ dans le simplexe ne dépend pas du choix de $\vect{V}$ et s'écrit:
+$$
+\boldsymbol{\Sigma}^{-1} = (\vect{G}_D \boldsymbol{\Sigma} \vect{G}_D + \vect{1}_D\vect{1}_D^T)^{-1} - \vect{1}_D\vect{1}_D^T
+$$
+\end{theorem}
+
+## Preuve
+
+Par simplicité, on suppose $\boldsymbol{\Sigma}$ est sous forme canonique. Soit $\vect{V}$ une base et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$. Pour travailler uniquement avec des matrices carrés, on introduit la matrice orthogonale $\vect{P}_V = [\vect{V} \frac{1}{\sqrt{D}}\vect{1}_D]$ de sorte que 
+$$
+ \boldsymbol{\Sigma} = \vect{V} \boldsymbol{\Sigma}^\star \vect{V}^T = \vect{P}_V 
+ \begin{bmatrix}
+ \boldsymbol{\Sigma}^\star & \vect{0} \\
+ \vect{0} & 0
+ \end{bmatrix}
+ \vect{P}_V^T 
+\;\;
+\text{et}
+\;\;
+ \boldsymbol{\Sigma}^{-1} = \vect{V} {\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T = \vect{P}_V 
+ \begin{bmatrix}
+ {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
+ \vect{0} & 0
+ \end{bmatrix}
+ \vect{P}_V^T. 
+$$
+
+. . .
+
+On conclut en notant
+\begin{align*}
+ \boldsymbol{\Sigma}^{-1} = 
+ \vect{P}_V 
+ \begin{bmatrix}
+ {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
+ \vect{0} & 0
+ \end{bmatrix}
+ \vect{P}_V^T 
+ & = 
+ \vect{P}_V 
+ \begin{bmatrix}
+ {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
+ \vect{0} & 1
+ \end{bmatrix}
+ \vect{P}_V^T 
+ - 
+ \vect{P}_V 
+ \begin{bmatrix}
+ \vect{0} & \vect{0} \\
+ \vect{0} & 1
+ \end{bmatrix}
+ \vect{P}_V^T \\
+ & =  
+ \left(
+ \vect{P}_V 
+ \begin{bmatrix}
+ {\boldsymbol{\Sigma}^\star} & \vect{0} \\
+ \vect{0} & 1
+ \end{bmatrix}
+ \vect{P}_V^T 
+ \right)^{-1}
+ - 
+ \vect{1}_D \vect{1}_D^T
+ \\
+ & = \left( \boldsymbol{\Sigma} + \vect{1}_D \vect{1}_D^T \right)^{-1} - \vect{1}_D \vect{1}_D^T
+\end{align*}
+
+# Distribution de Dirichlet
+
+## Définition
+
+### Intuition
+La \emph{loi de Dirichlet} est la distribution d'une composition obtenue en tirant $D$ composantes indépendamment suivant des lois Gamma partageant le même paramètre d'échelle avant de leur appliquer l'opérateur de clôture. 
+
+. . .
+
+\begin{definition}
+ Une composition aléatoire $\vect{X}$ suit une loi de Dirichlet $\CD(\boldsymbol{\alpha})$ de paramètre $\boldsymbol{\alpha} = (\alpha_1, \dots, \alpha_D)$, s'il existe $D$ variables indépendantes $Y_1, \dots, Y_D$ de loi $Y_j \sim \Gamma(\alpha_j, 1)$ telles que 
+$$
+  \vect{X} = \CC(Y_1, \dots, Y_D).
+$$
+La densité de $\vect{X}$ par rapport à la mesure de Lebesgue est donnée par
+$$
+\displaystyle
+  f(\vect{x}; \boldsymbol{\alpha}) = \frac{\Gamma\left(\alpha_0\right)}{\Pi_{j=1}^D \Gamma(\alpha_j)} \Pi_{j=1}^D x_i^{\alpha_i - 1} 1_{\{\vect{x} \in \CS^D\}}
+$$
+ où $\Gamma(x) = \int_0^\infty t^{x-1}e^{-x}dx$ désigne la fonction gamma et $\alpha_0 = \alpha_1 + \dots + \alpha_D$. 
+\end{definition}
+ 
+## Remarques et propriétés
+
+::: {.callout-note appearance="minimal"} 
+Il s'agit d'une généralisation multivariée de la loi Beta sur $[0, 1]$. 
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"} 
+Si $\alpha_1 = \dots = \alpha_D = \alpha$, on parle de loi de Dirichlet \textbf{symétrique}. 
+:::
+
+. . . 
+
+::: {.callout-note appearance="minimal"} 
+La loi de Dirichlet est \textbf{compatible} avec l'amalgamation. 
+Si $(X_1, \dots, X_D) \sim \CD(\alpha_1, \dots, \alpha_D)$, alors $\vect{X}' = (X_1 + X_2, X_3, \dots, X_D) \sim \CD(\alpha_1 + \alpha_2, \alpha_3, \dots, \alpha_D)$. 
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"} 
+::: {.nonincremental}
+- Lorsque $\alpha_1 = \dots = \alpha_D = 1$, $\CD(\boldsymbol{\alpha})$ est la \textbf{loi uniforme} sur $\CS^D$.
+- Lorsque $\alpha_1 = \dots = \alpha_D = 1/2$, $\CD(\boldsymbol{\alpha})$ est la \textbf{loi de Jeffrey} sur le simplexe. 
+:::
+:::
+
+## Moyenne et variance 
+
+Les moments de $\vect{X}$ ont des formes plus ou moins simples.
+
+. . .
+
+### Moments arithmétiques
+
+$$
+\begin{aligned}
+\mathbb{E}[\vect{X}] & = \CC(\boldsymbol{\alpha}) = \bar{\boldsymbol{\alpha}} \\ 
+\mathbb{V}[\vect{X}] & = \frac{1}{\alpha_0 + 1} \left( \text{diag}(\bar{\boldsymbol{\alpha}}) - \bar{\boldsymbol{\alpha}} \bar{\boldsymbol{\alpha}}^T \right) = \frac{1}{\alpha_0 + 1} \vect{G}_D  \diag(\bar{\boldsymbol{\alpha}}) \vect{G}_D 
+\end{aligned}
+$$
+
+où $\text{diag}(\vect{x})$ désigne la matrice diagonale de diagonale $\vect{x}$. 
+
+. . .
+
+### Moments compositionnels [@Aitchison1986]
+
+$$
+\begin{aligned}
+\mathbb{E}^\oplus[\vect{X}] & = \text{clr}^{-1}(\psi(\boldsymbol{\alpha}))
+\\
+\mathbb{V}^\oplus[\vect{X}] & = \vect{G}_D \text{diag}(\psi'(\boldsymbol{\alpha})) \vect{G}_D
+\end{aligned}
+$$
+où $\psi(x) = \Gamma'(x) / \Gamma(x)$ (resp. $\psi'(x)$) est la fonction digamma (resp. trigamma)
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+Les deux variances $\mathbb{V}[\vect{X}]$ et $\mathbb{V}^\oplus[\vect{X}]$ sont \emph{double-centrées}.
+:::
+
+## Remarques (bis)
+
+::: {.callout-note appearance="minimal"}
+::: {.nonincremental}
+- Au centrage près, les deux variances sont \textbf{diagonales}. 
+- Pas de possibilité de modéliser la dépendance entre composantes. 
+:::
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+La décomposition ${\boldsymbol{\alpha}} = \alpha_0 \bar{\boldsymbol{\alpha}}$ fait apparaître
+
+::: {.nonincremental}
+- une composition $\bar{\boldsymbol{\alpha}}$ ($\simeq$ composition centrale)
+- un facteur d'échelle $\alpha_0$ (paramètre de dispersion)
+:::
+
+Plus $\alpha_0$ est grand, plus les échantillons sont proches de $\bar{\boldsymbol{\alpha}}$
+:::
+
+## $\CD(\alpha_0 \bar{\boldsymbol{\alpha}})$ avec $\bar{\boldsymbol{\alpha}} = (0.5, 0.3, 0.2)$ et 2 valeurs de $\alpha_0$
+
+```{r}
+#| fig-width: 5
+#| fig-height: 5
+#| fig-cap: "Moyennes arithmétique ($+$), géométrique ($\\times$) et isocontours (-)"
+#| fig-subcap:
+#|   - "$\\alpha_0 = 6$ (gauche) et $\\alpha_0 = 18$ (droite)"
+library(compositions)
+library(gtools)
+set.seed(378)
+opar <- par(mar=c(1,1,0,1))
+par(mfrow = c(1, 2))
+# plot 1
+myalpha = c(5,3,2)*0.6
+plot(acomp(clo(myalpha)),pch="+", cex = 1.5, labels = c("x", "y", "z"), col = "blue")
+aux = seq(from=0, to=1, by=0.01)
+myx = expand.grid(x=aux,y=aux)
+c60 = cos(pi/3)
+s60 = sin(pi/3)
+myfun = function(x){
+  y = c(x[1]-x[2]*c60/s60, x[2]/s60)
+  y = c(1-sum(y),y)
+  dd = ifelse(any(y<0),NA, ddirichlet(y, alpha=myalpha))
+  return(dd)
+}
+dx = apply(myx,1,myfun)
+dim(dx) = c(101,101)
+contour(dx,asp=1,add=TRUE,col="grey", labels = "")
+xr = rDirichlet.acomp(n=30, alpha=myalpha)
+plot(xr,pch=19,cex=0.5,add=TRUE)
+Dstats = acomp(clrInv(digamma(myalpha)))
+plot(Dstats,pch="x", cex=1.5,add=TRUE, col="red")
+# plot 2
+myalpha = c(5,3,2)*1.8
+plot(acomp(clo(myalpha)),pch="+", cex = 1.5, labels = c("x", "y", "z"), col = "blue")
+aux = seq(from=0, to=1, by=0.01)
+myx = expand.grid(x=aux,y=aux)
+c60 = cos(pi/3)
+s60 = sin(pi/3)
+myfun = function(x){
+  y = c(x[1]-x[2]*c60/s60, x[2]/s60)
+  y = c(1-sum(y),y)
+  dd = ifelse(any(y<0),NA, ddirichlet(y, alpha=myalpha))
+  return(dd)
+}
+dx = apply(myx,1,myfun)
+dim(dx) = c(101,101)
+contour(dx,asp=1,add=TRUE,col="grey", labels = "")
+xr = rDirichlet.acomp(n=30, alpha=myalpha)
+plot(xr,pch=19,cex=0.5,add=TRUE)
+Dstats = acomp(clrInv(digamma(myalpha)))
+plot(Dstats,pch="x", cex=1.5,add=TRUE, col="red")
+par(opar)
+```
+
+# Loi normale sur le simplexe
+
+## Définition [@figueras2003models]
+
+La \textbf{loi normale sur le simplexe} est définie à l'aide de la philosophie de la transformation. 
+
+```{mermaid}
+%%| fig-width: 5
+flowchart LR
+  A[Espace euclidien] -- Loi normale --> B(Vecteur)
+  B -- xlr inverse --> C[Composition]
+```
+
+. . .
+
+\begin{definition}
+Soit $\vect{X}$ une composition aléatoire à valeurs dans $\CS^D$. On dit que $\vect{X}$ suit une loi normale sur le simplexe si et seulement si, pour tout matrice de base $\vect{V}$ le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi normale multivariée sur $\RR^{D-1}$. 
+\end{definition}
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+::: {.nonincremental}
+- \emph{Quid} des paramètres de la distribution ?
+- Dépendent-ils du choix de $\vect{V}$ ?
+:::
+:::
+
+## Remarques
+
+::: {.callout-important appearance="minimal"}
+Supposons que $\text{ilr}_\vect{V}(\vect{X}) \sim \mathcal{N}(\boldsymbol{\mu}_V^\star, \boldsymbol{\Sigma}_V^\star)$, on a 
+$$
+\clr(\vect{x}) = \vect{V} \ilr_V(\vect{x}) \sim \mathcal{N}(\underbrace{\vect{V} \boldsymbol{\mu}_V^\star}_{\boldsymbol{\mu}}, \underbrace{\vect{V} \boldsymbol{\Sigma}_V^\star \vect{V}^T}_{\boldsymbol{\Sigma}})
+$$
+:::
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+$\boldsymbol{\mu}$ et $\boldsymbol{\Sigma}$ sont des \textbf{invariants} de $\vect{X}$. En particulier
+$$
+\begin{aligned}
+\boldsymbol{\mu} & = \clr(\mathbb{E}^\oplus[\vect{X}]) \\
+\boldsymbol{\Sigma} & = \mathbb{V}^\oplus[\vect{X}] \\
+\end{aligned}
+$$
+:::
+
+## Définition (II) [@van2013analyzing]
+
+Une composition aléatoire $\vect{X}$ a une \emph{distribution normale sur le simplexe} de moyenne $\boldsymbol{\mu}$ et variance $\boldsymbol{\Sigma}$, notée $\mathcal{N}_{\CS}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, si son produit scalaire $\langle \vect{X}, \vect{u}\rangle_A$ avec \emph{chaque} composition du simplexe suit une distribution normale de moyenne $\boldsymbol{\mu}^T \clr(\vect{u})$ et de variance $\text{clr}(\vect{u}) \boldsymbol{\Sigma} \text{clr}(\vect{u})^T$. 
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+En particulier, si on considère une base $\vect{V}$, le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi $\mathcal{N}(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star)$ avec $\boldsymbol{\mu}^\star = \text{ilr}_\vect{V}(\boldsymbol{\mu})$ et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma}\vect{V}$. 
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+La densité de $\vect{X}$ par rapport à la mesure-image de la mesure de Lebesgue sur $\RR^{D-1}$ (aussi appelée mesure de Aitchinson) est:
+$$
+ f(\vect{x}; \boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) = \frac{1}{\sqrt{(2\pi)^{D-1} |\boldsymbol{\Sigma}^\star|}} \exp\left[ -\frac{1}{2} (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star)^T {\boldsymbol{\Sigma}^\star}^{-1}  (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star) \right]. 
+$$
+:::
+
+## Remarques (II)
+
+
+
+## Références
