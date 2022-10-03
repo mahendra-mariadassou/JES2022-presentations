@@ -13,7 +13,6 @@ format:
     chalkboard: 
       buttons: true
     preview-links: auto
-editor: visual
 ---
 
 ```{r}
@@ -76,14 +75,13 @@ Malheureusement, il arrive fréquemment qu'on ait des compositions avec des $0$.
 
 ## Origine : observations indirectes {.smaller}
 
-::: {.fragment fragment-index=1}
+::: {.fragment fragment-index="1"}
 Les zéros peuvent provenir de **données indirectes**, comme les compositions **reconstruites** à partir d'observations.
 :::
 
-::::: columns
-:::: {.column width="75%"}
-::: {.fragment fragment-index=2}
-
+::: columns
+::: {.column width="75%"}
+::: {.fragment fragment-index="2"}
 #### Poissons dans une rivière
 
 Composition estimée en faisant des captures le long de la rivière
@@ -95,32 +93,29 @@ Composition estimée en faisant des captures le long de la rivière
 | Composition estimée | 0.59   | 0.32     | 0.14     | **0**  |
 
 : Population de poissons dans la Seine au niveau de la station de Meudon (2021)
-
 :::
-::::
+:::
 
-:::: {.column width="25%"}
-::: {.fragment fragment-index=4}
+::: {.column width="25%"}
+::: {.fragment fragment-index="4"}
 ![Silure, Krüger, Public domain, via [Wikimedia Commons](https://fr.wikipedia.org/wiki/Silure)](figures/Silurus_glanis1.jpg){fig-align="center"}
 :::
-::::
-:::::
-
-::: {.fragment fragment-index=3}
-Si un poisson n'est jamais capturé en un site, sa composante est à $0$, comme ici pour la [**silure**]{.fragment .highlight-red fragment-index=4}   .
+:::
 :::
 
+::: {.fragment fragment-index="3"}
+Si un poisson n'est jamais capturé en un site, sa composante est à $0$, comme ici pour la [**silure**]{.fragment .highlight-red fragment-index="4"} .
+:::
 
 ## Origine : limites de détection {.smaller}
 
-::: {.fragment fragment-index=1}
+::: {.fragment fragment-index="1"}
 Données issues de Les 0 peuvent aussi apparaîtrent à cause de **limites de détection** (concentration trop faible pour être mesurée). On parle alors de **censure à gauche.**
 :::
 
-::::: columns
-:::: {.column width="75%"}
-::: {.fragment fragment-index=2}
-
+::: columns
+::: {.column width="75%"}
+::: {.fragment fragment-index="2"}
 #### Concentrations d'élements chimiques
 
 | Composition  | Cr    | B   | P   | V   | Cu    | Ti   | Ni    |
@@ -130,31 +125,27 @@ Données issues de Les 0 peuvent aussi apparaîtrent à cause de **limites de d�
 | $\vect{x}_3$ | 25.60 | 14  | 135 | 33  | **0** | 3925 | 14.20 |
 
 : Extrait des données de compositions géochimiques (en µg/g) de la rivière La Paloma (Vénézuala), reprises de @montero2010sedimentary dans `zCompositions`
-
 :::
 
-::: {.fragment fragment-index=3}
-Certains éléments sont présents en concentrations trop faibles pour être détectés, par exemple le [Cuivre]{.fragment .highlight-red fragment-index=4} et le [Nickel]{.fragment .highlight-red fragment-index=4}. 
-:::
-
-::::
-
-:::: {.column width="25%"}
-::: {.fragment fragment-index=4}
-
-::: {layout-nrow=2}
-Cuivre et Nickel
-![](figures/copper.jpg)
-
-![](figures/nickel.jpg){}
+::: {.fragment fragment-index="3"}
+Certains éléments sont présents en concentrations trop faibles pour être détectés, par exemple le [Cuivre]{.fragment .highlight-red fragment-index="4"} et le [Nickel]{.fragment .highlight-red fragment-index="4"}.
 :::
 :::
-::::
-:::::
+
+::: {.column width="25%"}
+::: {.fragment fragment-index="4"}
+::: {layout-nrow="2"}
+Cuivre et Nickel ![](figures/copper.jpg)
+
+![](figures/nickel.jpg)
+:::
+:::
+:::
+:::
 
 ## Pourquoi imputer? {.smaller}
 
-Dans les deux exemples précédent (absence de silure / de cuivre), le $0$ 
+Dans les deux exemples précédent (absence de silure / de cuivre), le $0$
 
 -   n'est en pas réellement un: le poisson / métal est présent en *faible abondance* plutôt que *réellement absent*.
 
@@ -238,25 +229,24 @@ Cette méthode paramétrique (*multiplicative log-normal replacement*, implémen
 
 . . .
 
-On se concentre sur la composante $x_j$ de limite de détection $\kappa_j$. En l'absence de censure, on suppose que $x_j \sim \mathcal{LN}(\mu_j, \sigma^2_j)$ a pour densité: 
+On se concentre sur la composante $x_j$ de limite de détection $\kappa_j$. En l'absence de censure, on suppose que $x_j \sim \mathcal{LN}(\mu_j, \sigma^2_j)$ a pour densité:
 
 $$
 f(x) = \frac{1}{x} \phi\left( \frac{\log(x) - \mu}{\sigma}\right) = \frac{1}{x\sigma\sqrt{2\pi}} \exp\left( \frac{(\log(x) - \mu)^2}{2\sigma^2}\right)
-$$ 
+$$
 
 où $\phi$ désigne la densité de la loi gaussienne $\mathcal{N}(0, 1)$ et l'indice $j$ est omis.
 
 . . .
 
-Du fait de la censure à gauche en $\kappa_j$, la densité de $x_j$ est en fait 
+Du fait de la censure à gauche en $\kappa_j$, la densité de $x_j$ est en fait
 
 $$
 f_c(x) = \begin{cases}
         \frac{1}{x} \phi\left( \frac{\log(x) - \mu}{\sigma}\right)  & \text{ si } x \geq \kappa \\
         \Phi\left( \frac{\log(\kappa) - \mu}{\sigma}\right)  & \text{ si } x = 0 \\
         \end{cases}
-$$ 
-où $\Phi$ est la fonction de répartition de la loi gaussienne $\mathcal{N}(0, 1)$.
+$$ où $\Phi$ est la fonction de répartition de la loi gaussienne $\mathcal{N}(0, 1)$.
 
 ## Moyenne d'une log-normale censurée {.smaller}
 
@@ -264,7 +254,7 @@ Si $X \sim \mathcal{LN}(\mu, \sigma^2)$, la moyenne de $X$ conditionnellement à
 
 $$
 \mathbb{E}[X | X < \kappa] = \exp\left(\mu + \frac{\sigma^2}{2} \right) \frac{\Phi\left( \frac{\log(\kappa) - \mu - \sigma^2}{\sigma}\right)}{\Phi\left( \frac{\log(\kappa) - \mu}{\sigma}\right)}
-$$ 
+$$
 
 . . .
 
@@ -355,15 +345,15 @@ On impute $\vect{y}_{i}^{cens}$ par sa moyenne conditionnelle:
 
 $$
 \hat{\vect{y}}_{i}^{cens} = \mathbb{E}\left[\vect{y}_i^{cens} | \vect{y}_i^{obs}, \vect{y}_i^{cens} < \boldsymbol{\psi}_i^{cens}; \hat{\boldsymbol{\mu}}, \hat{\boldsymbol{\Sigma}} \right]
-$$ 
+$$
 
 . . .
 
-Plus précisément, pour chaque coordonnée censurée $j$, on a 
+Plus précisément, pour chaque coordonnée censurée $j$, on a
 
 $$
  \hat{y}_{ij}^{cens} = \bar{\mu}_{ij}^{cens} - \bar{\sigma}_{ij}^{cens} \bar{\lambda}_{ij}^{cens}  
-$$ 
+$$
 
 où
 
@@ -378,6 +368,7 @@ Il s'agit de l'analogue de la l'imputation log-normale mais pour la variable gau
 ## Étape M {.smaller}
 
 ### Mise à jour des paramètres $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+
 $$
  \begin{align}
   \hat{\boldsymbol{\mu}} & = \frac{1}{n} \sum_{i=1}^n \hat{\vect{y}}_i \notag \\
@@ -394,11 +385,10 @@ En pratique l'estimateur $\hat{\boldsymbol{\Sigma}}$ est remplacé par une **ver
 ::: {#def-mult-em}
 Si on note $\mathbf{\kappa} = (\kappa_1, \dots, \kappa_D)$ le vecteur des limites de détection et $\vect{x}$ une composition avec des zéros, l'imputation est définie
 
-::::: {.columns}
-:::: {.column width="60%"}
-
+::: columns
+::: {.column width="60%"}
 ::: fragment
-1. en **estimant de façon robuste** par algorithme EM les paramètres $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ de $\vect{y} = \alr_{j_0}(\vect{x}) \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+1.  en **estimant de façon robuste** par algorithme EM les paramètres $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ de $\vect{y} = \alr_{j_0}(\vect{x}) \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
 
 $$
 (\hat{\boldsymbol{\mu}}, \hat{\boldsymbol{\Sigma}}) = \arg\max F(\vect{y}_1, \dots, \vect{y}_n; \boldsymbol{\mu}, \boldsymbol{\Sigma})
@@ -406,7 +396,7 @@ $$
 :::
 
 ::: fragment
-2. en **remplaçant les zéros** comme dans @def-mult-ln
+2.  en **remplaçant les zéros** comme dans @def-mult-ln
 
 $$
 \tilde{y}_{j} = 
@@ -416,27 +406,27 @@ $$
             \end{cases}
 $$
 :::
-::::
+:::
 
-:::: {.column width="40%"}
+::: {.column width="40%"}
 ::: fragment
-3. en repassant à une composition
-$$
-\tilde{\vect{x}} = \alr_j^{-1}(\tilde{\vect{y}})
-$$
+3.  en repassant à une composition $$
+    \tilde{\vect{x}} = \alr_j^{-1}(\tilde{\vect{y}})
+    $$
 :::
 
 ::: fragment
-4. en faisant une **correction multiplicative** ^[et une clôture si besoin]:
+4.  en faisant une **correction multiplicative** [^1]:
 
 $$
 \hat{x}_j = \begin{cases}            \tilde{x}_j & \text{ si } \tilde{x}_j < \kappa_j \\            \tilde{x}_j \left(1 - \sum_{\{k : \tilde{x}_{k} < \kappa_k\}} \tilde{x}_k \right) & \text{ sinon}            \end{cases}.
 $$
 :::
-::::
-:::::
-
 :::
+:::
+:::
+
+[^1]: et une clôture si besoin
 
 ## Comparatif
 
@@ -481,16 +471,16 @@ On considère une composition $\vect{x}$ mesurée par le biais d'un vecteur de c
 
 . . .
 
-On suppose que les comptages sont issus d'un **modèle hiérarchique Dirichlet-Multinomial** d'hyperparamètre $\boldsymbol{\alpha}$: 
+On suppose que les comptages sont issus d'un **modèle hiérarchique Dirichlet-Multinomial** d'hyperparamètre $\boldsymbol{\alpha}$:
 
-. . . 
+. . .
 
 $$
 \begin{align*}
  \vect{x} \sim & \mathcal{D}(1, \boldsymbol{\alpha}) \\
  \vect{c} \sim & \mathcal{M}(N, \boldsymbol{\alpha})
 \end{align*}
-$$ 
+$$
 
 où
 
@@ -504,7 +494,7 @@ La composition $\vect{x}$ est **latente** et doit être **reconstruite** à part
 
 ## Inférence de $\vect{x}$ {.smaller}
 
-Un estimateur $\hat{\vect{x}}$ naturel pour $\vect{x}$ serait l'estimateur du **maximum de vraisemblance** 
+Un estimateur $\hat{\vect{x}}$ naturel pour $\vect{x}$ serait l'estimateur du **maximum de vraisemblance**
 
 $$
 \hat{\vect{x}} = \CC(\vect{n}) = \left(\frac{n_1}{N}, \dots, \frac{n_D}{N} \right) 
@@ -514,11 +504,11 @@ $$
 
 . . .
 
-Le fait de spécifier une distribution à priori $\mathcal{D}(1, \boldsymbol{\alpha})$ sur $\vect{x}$ permet de basculer vers l'**estimateur bayésien** de la moyenne à posteriori: 
+Le fait de spécifier une distribution à priori $\mathcal{D}(1, \boldsymbol{\alpha})$ sur $\vect{x}$ permet de basculer vers l'**estimateur bayésien** de la moyenne à posteriori:
 
 $$
 \hat{\vect{x}} = \mathbb{E}[\vect{x} | \vect{c}] = \CC(\vect{n} + \boldsymbol{\alpha}) = \left(\frac{n_1 + \alpha_i}{N + A}, \dots, \frac{n_D + \alpha_D}{N + A} \right) \; \text{où} \; A =  \sum_{i=1}^D \alpha_i
-$$ 
+$$
 
 . . .
 
@@ -529,17 +519,17 @@ $$
 
 ## Comment choisir $\vect{\alpha}$ ? {.smaller}
 
-::: {.fragment fragment-index=1}
+::: {.fragment fragment-index="1"}
 ::: {.callout-note appearance="minimal"}
 -   On choisit souvent un paramètre symétrique $\boldsymbol{\alpha} = (\alpha, \dots, \alpha)$ avec $\alpha = 1$ ou $\alpha = 1/2$.
-    - $\alpha = 1$ est le prior uniforme sur $\CS^D$ 
-    - $\alpha = 1/2$ est le prior non-informatif de Jeffrey sur $\CS^D$
+    -   $\alpha = 1$ est le prior uniforme sur $\CS^D$
+    -   $\alpha = 1/2$ est le prior non-informatif de Jeffrey sur $\CS^D$
 -   Les deux reviennent à ajouter un pseudo-comptage de $1$ (ou $1/2$) aux observations avant de calculer les proportions.
 :::
 :::
 
-::::: {layout-ncol=2}
-:::: {.fragment fragment-index=2}
+::: {layout-ncol="2"}
+::: {.fragment fragment-index="2"}
 ::: {.callout-note appearance="minimal"}
 Le remplacement des $0$ correspondant est fait par
 
@@ -547,32 +537,33 @@ $$
 \mathbb{E}[x_i |c_i = 0] = \frac{\alpha}{N + D\alpha}. 
 $$
 :::
-::::
+:::
 
-:::: {.fragment fragment-index=4}
+::: {.fragment fragment-index="4"}
 ::: {.callout-important appearance="minimal"}
 Le remplacement des $0$ correspondant est fait par
 
 $$
-\mathbb{E}[x_i |c_i = 0] = s_i \frac{A}{N + A}. 
+\mathbb{E}[x_i |c_i = 0] = t_i \frac{S}{N + S}. 
 $$
 :::
-::::
-:::::
+:::
+:::
 
-:::: {.fragment fragment-index=3}
+::: {.fragment fragment-index="3"}
 ::: {.callout-important appearance="minimal"}
 On peut néanmoins faire **mieux** si on a plusieurs compositions à dispositions. @martin2015bayesian propose ainsi d'utiliser 
+
 $$
-\boldsymbol{\alpha} = A \vect{s}
-$$ 
+\boldsymbol{\alpha} = S \vect{t}
+$$
 
 où
 
--   $\vect{s}$ est une **moyenne robuste** des proportions empirique $\vect{c}_i/N$
--   $A$ est un **facteur d'échelle** à choisir parmi $D$, $\sqrt{N}$, $g(\vect{s})$.
+-   $\vect{t}$ est un estimateur robuste de $\vect{\alpha}$: $\vect{t} = \sum_{i' \neq i} \vect{c}_{i'} \big/ \sum_{i' \neq i} N_{i'}$
+-   $S$ est un **facteur d'échelle** à choisir parmi $D$, $\sqrt{N}$, $g(\vect{t})$.
 :::
-::::
+:::
 
 ## Imputation Bayesienne multiplicative {.smaller}
 
@@ -580,10 +571,10 @@ où
 Si on note $\vect{c}$ une composition discrète de total $N$ avec des zéros, l'imputation bayesienne (`zCompositions::cmultRepl()`) est définie
 
 ::: fragment
-en estimant une **composition moyenne** de façon robuste et en choisissant un facteur d'échelle $A$
+en estimant une **composition moyenne** $\vect{t}$ de façon robuste et en choisissant un facteur d'échelle $S$
 
 $$
-\vect{s} \simeq \frac{1}{n} \sum_i \frac{\vect{x}_i}{N_i} \quad \text{et} \quad \boldsymbol{\alpha} = A\vect{s}
+\vect{t} \simeq \frac{1}{n} \sum_i \frac{\vect{x}_i}{N_i} \quad \text{et} \quad \boldsymbol{\alpha} = S\vect{t}
 $$
 :::
 
@@ -612,15 +603,14 @@ $$
 
 Même si on travaille avec des comptages, on peut utiliser les méthodes d'imputations *continues* comme suit:
 
-::: {.incremental}
-- on note $\vect{x} = \vect{c} / N$ la composition empirique issue de $\vect{c}$. 
-- on considère $\kappa = \rho \times 1/N$ comme limite de détection pour toutes les composantes (avec $0 < \rho \leq 1$)
-- on applique une des 3 méthodes définies précédemment à $\vect{x}$
+::: incremental
+-   on note $\vect{x} = \vect{c} / N$ la composition empirique issue de $\vect{c}$.
+-   on considère $\kappa = \rho \times 1/N$ comme limite de détection pour toutes les composantes (avec $0 < \rho \leq 1$)
+-   on applique une des 3 méthodes définies précédemment à $\vect{x}$
 :::
 
 . . .
 
-C'est l'approche utilisée dans `zCompositions::cmultRepl(..., method = "CZM")`. 
-
+C'est l'approche utilisée dans `zCompositions::cmultRepl(..., method = "CZM")`.
 
 ## Réferences {.scrollable}
