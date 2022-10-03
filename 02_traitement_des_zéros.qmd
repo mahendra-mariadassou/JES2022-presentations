@@ -37,7 +37,7 @@ $$
 ## Plan
 
 ::: incremental
--   Présentations du problèmes
+-   Présentation du problème
 -   Méthodes pour compositions continues
 -   Méthodes pour compositions discrètes
 -   Étude de cas
