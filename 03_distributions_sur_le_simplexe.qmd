@@ -17,7 +17,8 @@ format:
     number-section: true
     keep-tex: true
     include-in-header:
-      - commandes.tex  
+      - commandes.tex
+    pdf-engine: xelatex
   revealjs:
     mermaid-format: png
     slide-number: true
@@ -30,16 +31,17 @@ format:
 #| echo: false
 library(tidyverse)
 library(ggtern)
+library(compositions)
 ```
 
 # Définitions et résultats techniques
 
 ## Moyenne et variance dans le simplexe
 
-La moyenne et la variance sont définies à l'aide de la **philosophie de la transformation**
+La moyenne et la variance sont définies à l'aide de la \textbf{philosophie de la transformation}
 
 \begin{definition}
-Soit $\vect{X}$ une composition aléatoire. La **moyenne** de $\vect{X}$ dans le simplexe, aussi appelée \emph{centre de la composition}, et sa matrice de **(clr)-covariance** sont données par: 
+Soit $\vect{X}$ une composition aléatoire. La \textbf{moyenne} de $\vect{X}$ dans le simplexe, aussi appelée \emph{centre de la composition}, et sa matrice de \textbf{(clr)-covariance} sont données par:
 $$
  {\mathbb E}^\oplus[\vect{X}] = \text{clr}^{-1} \left( {\mathbb E}[\text{clr}(\vect{X})]\right) \quad \text{ et } \quad {\mathbb V}^\oplus[\vect{X}] = {\mathbb V}[\text{clr}(\vect{X})] = {\mathbb V}[\vect{G}_D \log(\vect{X})].
 $$
@@ -47,27 +49,27 @@ $$
 
 . . .
 
-::: {.callout-note appareance="simple"}
+::: {.callout-note appareance="minimal"}
 - ${\mathbb E}^\oplus[\vect{X}]$ est à valeurs dans $\CS^D$
-- ${\mathbb V}^{\oplus}[\vect{X}]$ est à valeurs dans $\mathcal{A}_D$, l'espace des matrices doublement centrées. 
+- ${\mathbb V}^{\oplus}[\vect{X}]$ est à valeurs dans $\mathcal{A}_D$, l'espace des matrices doublement centrées.
 :::
 
 ## Inversion dans $\mathcal{A}_D$
 
 \begin{definition}
- Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$. $\boldsymbol{\Sigma}$ est dite sous \emph{forme canonique} sur le simplexe si elle est centrée en ligne et en colonne, c'est à dire si $\boldsymbol{\Sigma} = \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D$. 
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$. $\boldsymbol{\Sigma}$ est dite sous \emph{forme canonique} sur le simplexe si elle est centrée en ligne et en colonne, c'est à dire si $\boldsymbol{\Sigma} = \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D$.
 \end{definition}
 
-. . . 
+. . .
 
 ::: {.callout-note appearance="minimal"}
-$\vect{G}_D$ est de rang $D-1$ donc les matrices de clr-covariance ont un rang $\leq D-1$. Il faut donc redéfinir la notion d'inverse pour ces matrices. 
+$\vect{G}_D$ est de rang $D-1$ donc les matrices de clr-covariance ont un rang $\leq D-1$. Il faut donc redéfinir la notion d'inverse pour ces matrices.
 :::
 
 . . .
 
 \begin{definition}
- Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$ sous forme canonique. $\boldsymbol{\Sigma}$ est dite \textbf{inversible} sur le simplexe s'il existe une base $\vect{V}$ telle que $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$ est inversible. Dans ce cas, l'inverse de $\boldsymbol{\Sigma}$ dans le simplexe est $\boldsymbol{\Sigma}^{-1} = \vect{V}{\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T$. 
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique de taille $D$ sous forme canonique. $\boldsymbol{\Sigma}$ est dite \textbf{inversible} sur le simplexe s'il existe une base $\vect{V}$ telle que $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$ est inversible. Dans ce cas, l'inverse de $\boldsymbol{\Sigma}$ dans le simplexe est $\boldsymbol{\Sigma}^{-1} = \vect{V}{\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T$.
 \end{definition}
 
 . . .
@@ -76,12 +78,12 @@ $\vect{G}_D$ est de rang $D-1$ donc les matrices de clr-covariance ont un rang $
  On impose $\boldsymbol{\Sigma}$ sous forme canonique uniquement pour alléger les notations, sinon:
 $$
  \vect{V}^T \boldsymbol{\Sigma} \vect{V} = \vect{V}^T \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D \vect{V}.
-$$ 
-::: 
+$$
+:::
 
 ## Inversion dans $\mathcal{A}_D$ (II)
 
-L'inversibilité ne dépend pas du choix de la base $\vect{V}$. 
+L'inversibilité ne dépend pas du choix de la base $\vect{V}$.
 
 . . .
 
@@ -95,76 +97,78 @@ $$
 
 ## Preuve
 
-Par simplicité, on suppose $\boldsymbol{\Sigma}$ est sous forme canonique. Soit $\vect{V}$ une base et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$. Pour travailler uniquement avec des matrices carrés, on introduit la matrice orthogonale $\vect{P}_V = [\vect{V} \frac{1}{\sqrt{D}}\vect{1}_D]$ de sorte que 
+Par simplicité, on suppose $\boldsymbol{\Sigma}$ est sous forme canonique. Soit $\vect{V}$ une base et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$. Pour travailler uniquement avec des matrices carrés, on introduit la matrice orthogonale $\vect{P}_V = [\vect{V} \frac{1}{\sqrt{D}}\vect{1}_D]$ de sorte que
 $$
- \boldsymbol{\Sigma} = \vect{V} \boldsymbol{\Sigma}^\star \vect{V}^T = \vect{P}_V 
+ \boldsymbol{\Sigma} = \vect{V} \boldsymbol{\Sigma}^\star \vect{V}^T = \vect{P}_V
  \begin{bmatrix}
  \boldsymbol{\Sigma}^\star & \vect{0} \\
  \vect{0} & 0
  \end{bmatrix}
- \vect{P}_V^T 
+ \vect{P}_V^T
 \;\;
 \text{et}
 \;\;
- \boldsymbol{\Sigma}^{-1} = \vect{V} {\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T = \vect{P}_V 
+ \boldsymbol{\Sigma}^{-1} = \vect{V} {\boldsymbol{\Sigma}^\star}^{-1} \vect{V}^T = \vect{P}_V
  \begin{bmatrix}
  {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
  \vect{0} & 0
  \end{bmatrix}
- \vect{P}_V^T. 
+ \vect{P}_V^T.
 $$
 
 . . .
 
 On conclut en notant
-\begin{align*}
- \boldsymbol{\Sigma}^{-1} = 
- \vect{P}_V 
+$$
+\begin{aligned}
+ \boldsymbol{\Sigma}^{-1} =
+ \vect{P}_V
  \begin{bmatrix}
  {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
  \vect{0} & 0
  \end{bmatrix}
- \vect{P}_V^T 
- & = 
- \vect{P}_V 
+ \vect{P}_V^T
+ & =
+ \vect{P}_V
  \begin{bmatrix}
  {\boldsymbol{\Sigma}^\star}^{-1} & \vect{0} \\
  \vect{0} & 1
  \end{bmatrix}
- \vect{P}_V^T 
- - 
- \vect{P}_V 
+ \vect{P}_V^T
+ -
+ \vect{P}_V
  \begin{bmatrix}
  \vect{0} & \vect{0} \\
  \vect{0} & 1
  \end{bmatrix}
  \vect{P}_V^T \\
- & =  
+ & =
  \left(
- \vect{P}_V 
+ \vect{P}_V
  \begin{bmatrix}
  {\boldsymbol{\Sigma}^\star} & \vect{0} \\
  \vect{0} & 1
  \end{bmatrix}
- \vect{P}_V^T 
+ \vect{P}_V^T
  \right)^{-1}
- - 
+ -
  \vect{1}_D \vect{1}_D^T
  \\
  & = \left( \boldsymbol{\Sigma} + \vect{1}_D \vect{1}_D^T \right)^{-1} - \vect{1}_D \vect{1}_D^T
-\end{align*}
+\end{aligned}
+$$
 
 # Distribution de Dirichlet
 
 ## Définition
 
 ### Intuition
-La \emph{loi de Dirichlet} est la distribution d'une composition obtenue en tirant $D$ composantes indépendamment suivant des lois Gamma partageant le même paramètre d'échelle avant de leur appliquer l'opérateur de clôture. 
+La \emph{loi de Dirichlet} est la distribution d'une composition obtenue en tirant $D$ composantes indépendamment suivant des lois Gamma partageant le même paramètre d'échelle avant de leur appliquer l'opérateur de clôture.
 
 . . .
 
 \begin{definition}
- Une composition aléatoire $\vect{X}$ suit une loi de Dirichlet $\CD(\boldsymbol{\alpha})$ de paramètre $\boldsymbol{\alpha} = (\alpha_1, \dots, \alpha_D)$, s'il existe $D$ variables indépendantes $Y_1, \dots, Y_D$ de loi $Y_j \sim \Gamma(\alpha_j, 1)$ telles que 
+ Une composition aléatoire $\vect{X}$ suit une loi de Dirichlet $\CD(\boldsymbol{\alpha})$ de paramètre $\boldsymbol{\alpha} = (\alpha_1, \dots, \alpha_D)$, s'il existe $D$ variables indépendantes $Y_1, \dots, Y_D$ de loi $Y_j \sim \Gamma(\alpha_j, 1)$ telles que
 $$
   \vect{X} = \CC(Y_1, \dots, Y_D).
 $$
@@ -173,38 +177,38 @@ $$
 \displaystyle
   f(\vect{x}; \boldsymbol{\alpha}) = \frac{\Gamma\left(\alpha_0\right)}{\Pi_{j=1}^D \Gamma(\alpha_j)} \Pi_{j=1}^D x_i^{\alpha_i - 1} 1_{\{\vect{x} \in \CS^D\}}
 $$
- où $\Gamma(x) = \int_0^\infty t^{x-1}e^{-x}dx$ désigne la fonction gamma et $\alpha_0 = \alpha_1 + \dots + \alpha_D$. 
+ où $\Gamma(x) = \int_0^\infty t^{x-1}e^{-x}dx$ désigne la fonction gamma et $\alpha_0 = \alpha_1 + \dots + \alpha_D$.
 \end{definition}
- 
+
 ## Remarques et propriétés
 
-::: {.callout-note appearance="minimal"} 
-Il s'agit d'une généralisation multivariée de la loi Beta sur $[0, 1]$. 
+::: {.callout-note appearance="minimal"}
+Il s'agit d'une généralisation multivariée de la loi Beta sur $[0, 1]$.
 :::
 
 . . .
 
-::: {.callout-note appearance="minimal"} 
-Si $\alpha_1 = \dots = \alpha_D = \alpha$, on parle de loi de Dirichlet \textbf{symétrique}. 
-:::
-
-. . . 
-
-::: {.callout-note appearance="minimal"} 
-La loi de Dirichlet est \textbf{compatible} avec l'amalgamation. 
-Si $(X_1, \dots, X_D) \sim \CD(\alpha_1, \dots, \alpha_D)$, alors $\vect{X}' = (X_1 + X_2, X_3, \dots, X_D) \sim \CD(\alpha_1 + \alpha_2, \alpha_3, \dots, \alpha_D)$. 
+::: {.callout-note appearance="minimal"}
+Si $\alpha_1 = \dots = \alpha_D = \alpha$, on parle de loi de Dirichlet \textbf{symétrique}.
 :::
 
 . . .
 
-::: {.callout-note appearance="minimal"} 
+::: {.callout-note appearance="minimal"}
+La loi de Dirichlet est \textbf{compatible} avec l'amalgamation.
+Si $(X_1, \dots, X_D) \sim \CD(\alpha_1, \dots, \alpha_D)$, alors $\vect{X}' = (X_1 + X_2, X_3, \dots, X_D) \sim \CD(\alpha_1 + \alpha_2, \alpha_3, \dots, \alpha_D)$.
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"}
 ::: {.nonincremental}
 - Lorsque $\alpha_1 = \dots = \alpha_D = 1$, $\CD(\boldsymbol{\alpha})$ est la \textbf{loi uniforme} sur $\CS^D$.
-- Lorsque $\alpha_1 = \dots = \alpha_D = 1/2$, $\CD(\boldsymbol{\alpha})$ est la \textbf{loi de Jeffrey} sur le simplexe. 
+- Lorsque $\alpha_1 = \dots = \alpha_D = 1/2$, $\CD(\boldsymbol{\alpha})$ est la \textbf{loi de Jeffrey} sur le simplexe.
 :::
 :::
 
-## Moyenne et variance 
+## Moyenne et variance
 
 Les moments de $\vect{X}$ ont des formes plus ou moins simples.
 
@@ -214,12 +218,12 @@ Les moments de $\vect{X}$ ont des formes plus ou moins simples.
 
 $$
 \begin{aligned}
-\mathbb{E}[\vect{X}] & = \CC(\boldsymbol{\alpha}) = \bar{\boldsymbol{\alpha}} \\ 
-\mathbb{V}[\vect{X}] & = \frac{1}{\alpha_0 + 1} \left( \text{diag}(\bar{\boldsymbol{\alpha}}) - \bar{\boldsymbol{\alpha}} \bar{\boldsymbol{\alpha}}^T \right) = \frac{1}{\alpha_0 + 1} \vect{G}_D  \diag(\bar{\boldsymbol{\alpha}}) \vect{G}_D 
+\mathbb{E}[\vect{X}] & = \CC(\boldsymbol{\alpha}) = \bar{\boldsymbol{\alpha}} \\
+\mathbb{V}[\vect{X}] & = \frac{1}{\alpha_0 + 1} \left( \text{diag}(\bar{\boldsymbol{\alpha}}) - \bar{\boldsymbol{\alpha}} \bar{\boldsymbol{\alpha}}^T \right) = \frac{1}{\alpha_0 + 1} \vect{G}_D  \diag(\bar{\boldsymbol{\alpha}}) \vect{G}_D
 \end{aligned}
 $$
 
-où $\text{diag}(\vect{x})$ désigne la matrice diagonale de diagonale $\vect{x}$. 
+où $\text{diag}(\vect{x})$ désigne la matrice diagonale de diagonale $\vect{x}$.
 
 . . .
 
@@ -244,8 +248,8 @@ Les deux variances $\mathbb{V}[\vect{X}]$ et $\mathbb{V}^\oplus[\vect{X}]$ sont 
 
 ::: {.callout-note appearance="minimal"}
 ::: {.nonincremental}
-- Au centrage près, les deux variances sont \textbf{diagonales}. 
-- Pas de possibilité de modéliser la dépendance entre composantes. 
+- Au centrage près, les deux variances sont \textbf{diagonales}.
+- Pas de possibilité de modéliser la dépendance entre composantes.
 :::
 :::
 
@@ -322,7 +326,7 @@ par(opar)
 
 ## Définition [@figueras2003models]
 
-La \textbf{loi normale sur le simplexe} est définie à l'aide de la philosophie de la transformation. 
+La \textbf{loi normale sur le simplexe} est définie à l'aide de la philosophie de la transformation.
 
 ```{mermaid}
 %%| fig-width: 5
@@ -334,7 +338,7 @@ flowchart LR
 . . .
 
 \begin{definition}
-Soit $\vect{X}$ une composition aléatoire à valeurs dans $\CS^D$. On dit que $\vect{X}$ suit une loi normale sur le simplexe si et seulement si, pour tout matrice de base $\vect{V}$ le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi normale multivariée sur $\RR^{D-1}$. 
+Soit $\vect{X}$ une composition aléatoire à valeurs dans $\CS^D$. On dit que $\vect{X}$ suit une loi normale sur le simplexe si et seulement si, pour tout matrice de base $\vect{V}$ le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi normale multivariée sur $\RR^{D-1}$.
 \end{definition}
 
 . . .
@@ -349,7 +353,7 @@ Soit $\vect{X}$ une composition aléatoire à valeurs dans $\CS^D$. On dit que $
 ## Remarques
 
 ::: {.callout-important appearance="minimal"}
-Supposons que $\text{ilr}_\vect{V}(\vect{X}) \sim \mathcal{N}(\boldsymbol{\mu}_V^\star, \boldsymbol{\Sigma}_V^\star)$, on a 
+Supposons que $\text{ilr}_\vect{V}(\vect{X}) \sim \mathcal{N}(\boldsymbol{\mu}_V^\star, \boldsymbol{\Sigma}_V^\star)$, on a
 $$
 \clr(\vect{x}) = \vect{V} \ilr_V(\vect{x}) \sim \mathcal{N}(\underbrace{\vect{V} \boldsymbol{\mu}_V^\star}_{\boldsymbol{\mu}}, \underbrace{\vect{V} \boldsymbol{\Sigma}_V^\star \vect{V}^T}_{\boldsymbol{\Sigma}})
 $$
@@ -369,12 +373,12 @@ $$
 
 ## Définition (II) [@van2013analyzing]
 
-Une composition aléatoire $\vect{X}$ a une \emph{distribution normale sur le simplexe} de moyenne $\boldsymbol{\mu}$ et variance $\boldsymbol{\Sigma}$, notée $\mathcal{N}_{\CS}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, si son produit scalaire $\langle \vect{X}, \vect{u}\rangle_A$ avec \emph{chaque} composition du simplexe suit une distribution normale de moyenne $\boldsymbol{\mu}^T \clr(\vect{u})$ et de variance $\text{clr}(\vect{u}) \boldsymbol{\Sigma} \text{clr}(\vect{u})^T$. 
+Une composition aléatoire $\vect{X}$ a une \emph{distribution normale sur le simplexe} de moyenne $\boldsymbol{\mu}$ et variance $\boldsymbol{\Sigma}$, notée $\mathcal{N}_{\CS}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, si son produit scalaire $\langle \vect{X}, \vect{u}\rangle_A$ avec \emph{chaque} composition du simplexe suit une distribution normale de moyenne $\boldsymbol{\mu}^T \clr(\vect{u})$ et de variance $\text{clr}(\vect{u}) \boldsymbol{\Sigma} \text{clr}(\vect{u})^T$.
 
 . . .
 
 ::: {.callout-note appearance="minimal"}
-En particulier, si on considère une base $\vect{V}$, le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi $\mathcal{N}(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star)$ avec $\boldsymbol{\mu}^\star = \text{ilr}_\vect{V}(\boldsymbol{\mu})$ et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma}\vect{V}$. 
+En particulier, si on considère une base $\vect{V}$, le vecteur $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ suit une loi $\mathcal{N}(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star)$ avec $\boldsymbol{\mu}^\star = \text{ilr}_\vect{V}(\boldsymbol{\mu})$ et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma}\vect{V}$.
 :::
 
 . . .
@@ -382,12 +386,455 @@ En particulier, si on considère une base $\vect{V}$, le vecteur $\vect{X}^\star
 ::: {.callout-note appearance="minimal"}
 La densité de $\vect{X}$ par rapport à la mesure-image de la mesure de Lebesgue sur $\RR^{D-1}$ (aussi appelée mesure de Aitchinson) est:
 $$
- f(\vect{x}; \boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) = \frac{1}{\sqrt{(2\pi)^{D-1} |\boldsymbol{\Sigma}^\star|}} \exp\left[ -\frac{1}{2} (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star)^T {\boldsymbol{\Sigma}^\star}^{-1}  (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star) \right]. 
+ f(\vect{x}; \boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) = \frac{1}{\sqrt{(2\pi)^{D-1} |\boldsymbol{\Sigma}^\star|}} \exp\left[ -\frac{1}{2} (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star)^T {\boldsymbol{\Sigma}^\star}^{-1}  (\text{ilr}_{\vect{V}}(\vect{x}) - \boldsymbol{\mu}^\star) \right].
 $$
 :::
 
 ## Remarques (II)
 
+::: {.callout-note appearance="minimal"}
+Le passage par $(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star)$ facilite l'écriture en garantissant que $|\boldsymbol{\Sigma}^\star|$ est non-nul mais on pourrait s'en passer.
+:::
 
+. . .
+
+::: {.callout-note appearance="minimal"}
+Sans contraintes supplémentaires, $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ ne sont pas identifiables. Ils le deviennent si impose $\boldsymbol{\mu}^T \vect{1}_D = 0$ et $\boldsymbol{\Sigma} \vect{1}_D = \vect{0}_D$.
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+Sans contraintes supplémentaires sur $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ on a
+$$
+\clr(\mathbb{E}^\oplus[\vect{X}]) = \vect{G}_D \boldsymbol{\mu} \;\; \text{et} \;\;
+\mathbb{V}^\oplus[\vect{X}] = \vect{G}_D \boldsymbol{\Sigma} \vect{G}_D
+$$
+:::
+
+## Simulations
+
+::::: {.columns}
+:::: {.column width="50%"}
+On peut facilement simuler des compositions aléatoires de loi normale sur le simplexe:
+$$
+\begin{aligned}
+ \vect{Z} & \sim \mathcal{N}(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) \\
+ \vect{X} & = \text{ilr}_\vect{V}^{-1}(\vect{Z}).
+\end{aligned}
+$$
+en se donnant une base $\vect{V}$ quelconque et en calculant $\boldsymbol{\mu}^\star$ et $\boldsymbol{\Sigma}^\star$.
+::::
+
+. . .
+
+:::: {.column width="50%"}
+$$
+\begin{aligned}
+ \boldsymbol{\mu}^\star & = (0, 0) \\
+ \boldsymbol{\Sigma}^{\star} & =
+ \begin{bmatrix}
+    2  & \rho \\
+    \rho  & 2
+ \end{bmatrix} \\
+ \vect{V} & = \begin{bmatrix}
+-\frac{1}{\sqrt{2}}  & -\frac{1}{\sqrt{6}} \\
+ \frac{1}{\sqrt{2}}  & -\frac{1}{\sqrt{6}} \\
+ 0                   &  \frac{2}{\sqrt{6}}
+\end{bmatrix}
+\end{aligned}
+$$
+$\vect{V}$ est la base pivot usuelle et on considère $\rho \in \{-1.5, 0, 1.5\}$.
+::::
+:::::
+
+## Illustrations ($\rho = -1.5$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1))
+mu <- c(1, 1, 1)
+var <- matrix(c(2, -1.5, -1.5, 2),ncol=2)
+rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
+mymn = acomp(mu)
+myvr = ilrvar2clr(var)
+par(mfrow = c(1, 2))
+## Plot 1
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+## Plot 2
+plot(rsamples, pch=19, cex=0.5)
+points(x = ilr(mu)[1], y = ilr(mu)[2],
+     pch="+", cex = 2
+     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
+     )
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(ilr(mu),var,r, col="grey")
+}
+par(opar)
+```
+
+## Illustrations ($\rho = 0$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1))
+mu <- c(1, 1, 1)
+var <- matrix(c(2, 0, 0, 2),ncol=2)
+rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
+mymn = acomp(mu)
+myvr = ilrvar2clr(var)
+par(mfrow = c(1, 2))
+## Plot 1
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+## Plot 2
+plot(rsamples, pch=19, cex=0.5)
+points(x = ilr(mu)[1], y = ilr(mu)[2],
+     pch="+", cex = 2
+     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
+     )
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(ilr(mu),var,r, col="grey")
+}
+par(opar)
+```
+
+## Illustrations ($\rho = 1.5$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1))
+mu <- c(1, 1, 1)
+var <- matrix(c(2, 1.5, 1.5, 2),ncol=2)
+rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
+mymn = acomp(mu)
+myvr = ilrvar2clr(var)
+par(mfrow = c(1, 2))
+## Plot 1
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+## Plot 2
+plot(rsamples, pch=19, cex=0.5)
+points(x = ilr(mu)[1], y = ilr(mu)[2],
+     pch="+", cex = 2
+     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
+     )
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(ilr(mu),var,r, col="grey")
+}
+par(opar)
+```
+
+# Loi elliptique sur le simplexe
+
+
+## Définition
+
+
+La densité normale sur le simplexe peut être généralisée aux familles elliptiques pour avoir des queues de distributions plus lourdes que la gaussienne (utile pour la détection d'atypiques).
+
+. . .
+
+\begin{definition}
+Une composition aléatoire $\vect{X}$ a une \emph{distribution elliptique sur le simplexe} de moyenne $\boldsymbol{\mu}$ et variance $\boldsymbol{\Sigma}$ si n'importe laquelle de ses transformées ilr suit une distribution elliptique sur $\RR^{D-1}$.
+\end{definition}
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+Dans la base $\vect{V}$ avec $\boldsymbol{\mu}^\star = \vect{V}^T \boldsymbol{\mu}$ et $\boldsymbol{\Sigma}^\star = \vect{V}^T \boldsymbol{\Sigma} \vect{V}$, la densité de $\vect{X}^\star = \text{ilr}_\vect{V}(\vect{X})$ par rapport à la mesure de Lebesgue sur $\RR^{D-1}$ est:
+$$
+ f(\vect{x}^\star; \boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) = k(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star) \times g\left(  (\vect{x}^\star - \boldsymbol{\mu}^\star)^T {\boldsymbol{\Sigma}^\star}^{-1}  (\vect{x}^\star - \boldsymbol{\mu}^\star) \right).
+$$
+où $k(\boldsymbol{\mu}^\star, \boldsymbol{\Sigma}^\star)$ est la constante de normalisation et $g$ une fonction à valeurs dans $\RR_+$.
+:::
+
+## Remarques (I)
+
+::: {.callout-note appearance="minimal"}
+::: {.nonincremental}
+- Pour la loi gaussienne, $g(x) = \exp(-x^2/2)$
+- Pour la loi de Student à $\nu$ degrés de libertés, $g(x) = (1+ x/\nu)^{-(\nu + D-1)/2}$
+:::
+:::
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+::: {.nonincremental}
+- La distribution est invariante au choix de $\vect{V}$
+- Les paramètres $\boldsymbol{\mu}$ et $\boldsymbol{\Sigma}$ ne sont identifiables que via $\vect{G}_D \boldsymbol{\mu}$) et $\vect{G}_D \boldsymbol{\Sigma} \vect{G}_D$
+:::
+:::
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+Simuler une loi elliptique sur le simplexe est \textbf{aussi difficile} que de simuler une loi elliptique sur $\RR^{D-1}$. Ce n'est pas toujours possible...
+:::
+
+## Simulations
+
+::::: {.columns}
+:::: {.column width="50%"}
+On peut simuler des compositions aléatoires de \textbf{loi de student} sur le simplexe:
+$$
+\begin{aligned}
+\vect{Z} & \sim \mathcal{N}(\vect{0}_{D-1}, \boldsymbol{\Sigma}^\star) \\
+u        & \sim \chi^2_\nu \\
+\vect{Y} & = \sqrt{\nu/u} \vect{Z} + \boldsymbol{\mu}^\star \\
+\vect{X} & = \text{ilr}_\vect{V}^{-1}(\vect{Z}).
+\end{aligned}
+$$
+en se donnant une base $\vect{V}$ quelconque et en calculant $\boldsymbol{\mu}^\star$ et $\boldsymbol{\Sigma}^\star$.
+::::
+
+. . .
+
+:::: {.column width="50%"}
+$$
+\begin{aligned}
+ \boldsymbol{\mu}^\star & = (0, 0) \\
+ \boldsymbol{\Sigma}^{\star} & =
+ \begin{bmatrix}
+    0.5  & 0.1 \\
+    0.1  & 0.5
+ \end{bmatrix} \\
+ \vect{V} & = \begin{bmatrix}
+-\frac{1}{\sqrt{2}}  & -\frac{1}{\sqrt{6}} \\
+ \frac{1}{\sqrt{2}}  & -\frac{1}{\sqrt{6}} \\
+ 0                   &  \frac{2}{\sqrt{6}}
+\end{bmatrix}
+\end{aligned}
+$$
+$\vect{V}$ est la base pivot usuelle.
+::::
+:::::
+
+## Illustrations ($\nu = 3$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Loi normale (gauche) et de student (droite) de mêmes paramètres ($\\nu= 3$ pour la student) sur le simplexe. Les isocontours sont celles de la gaussienne dans les deux cas."
+set.seed(378)
+opar <- par(mar=c(2,1,1,1))
+mu <- c(1, 1, 1)
+var <- matrix(c(0.5, 0.1, 0.1, 0.5),ncol=2)
+n <- 100
+mymn = acomp(mu)
+myvr = ilrvar2clr(var)
+par(mfrow = c(1, 2))
+## Plot 1: gaussienne
+rsamples <- MASS::mvrnorm(n, mu = ilr(mu), Sigma = var)
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+## Plot 2: student
+nu <- 3
+u <- rchisq(n, df = nu)
+rz <- MASS::mvrnorm(n, mu = c(0,0), Sigma = var)
+rsamples <- sqrt(nu/u) * rz + ilr(mu)
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+par(opar)
+```
+
+## Illustrations ($\nu = 20$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Loi normale (gauche) et de student (droite) de mêmes paramètres ($\\nu= 20$ pour la student) sur le simplexe. Les isocontours sont celles de la gaussienne dans les deux cas."
+set.seed(378)
+opar <- par(mar=c(2,1,1,1))
+mu <- c(1, 1, 1)
+var <- matrix(c(0.5, 0.1, 0.1, 0.5),ncol=2)
+n <- 100
+mymn = acomp(mu)
+myvr = ilrvar2clr(var)
+par(mfrow = c(1, 2))
+## Plot 1: gaussienne
+rsamples <- MASS::mvrnorm(n, mu = ilr(mu), Sigma = var)
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+## Plot 2: student
+nu <- 20
+u <- rchisq(n, df = nu)
+rz <- MASS::mvrnorm(n, mu = c(0,0), Sigma = var)
+rsamples <- sqrt(nu/u) * rz + ilr(mu)
+plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+for(p in c(0.5,1:9,9.5)/10){
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(mymn,myvr,r, col="grey")
+}
+xr <- ilrInv(rsamples)
+plot(xr, add=TRUE, pch=19, cex=0.5)
+par(opar)
+```
+
+# Loi de Aitchison sur le simplexe
+
+## Définition [@Aitchison1985]
+
+C'est une généralisation de la loi de Dirichlet et de la loi normale sur le simplexe. 
+
+. . .
+
+\begin{definition}
+ Soit $\boldsymbol{\Sigma}$ une matrice symétrique définie positive dans le simplexe, $\boldsymbol{\mu}$ une composition et $\alpha$ un réel positif. La densité de Aitchison par rapport à la mesure de Aitchinson sur le simplexe $\mathcal{A}(\alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma})$ est donnée par 
+$$
+ f(\vect{x}; \alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma}) = e^{-\kappa(\alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma})} \times \Pi_{j=1}^D x_j^{\alpha - 1} \times \exp\left[ -\frac{1}{2} \text{clr}(\vect{x} \ominus \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} \text{clr}(\vect{x} \ominus \boldsymbol{\mu}) \right].
+$$
+où $\boldsymbol{\Sigma}^{-1} = (\vect{G}_D \boldsymbol{\Sigma} \vect{G}_D + \vect{1}_D\vect{1}_D^T)^{-1} - \vect{1}_D\vect{1}_D^T$. 
+\end{definition}
+
+::: {.callout-note appearance="minimal"}
+- $\boldsymbol{\mu}$ est une \emph{quasi-moyenne} 
+- $\boldsymbol{\Sigma}$ une \emph{quasi-variance}
+- $f(\vect{x}; \alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma})$ est le produit des densités d'une
+  - d'une Dirichlet symétrique de paramètre $\alpha$ et 
+  - d'une Normale sur le simplexe de paramètres $(\boldsymbol{\mu}, \boldsymbol{\Sigma})$. 
+:::
+
+## Remarques 
+
+::: {.callout-note appearance="minimal"}
+- Quand $\alpha=0$, $\mathcal{A}(\alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \mathcal{N}_{\CS}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+- Quand $\Sigma^{-1} \to \vect{0}_{D\times D}$, $\mathcal{A}(\alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma}) \to \CD(\alpha, \dots, \alpha)$ en distribution. 
+:::
+
+. . .
+
+::: {.callout-note appearance="minimal"}
+::: {.nonincremental}
+- Les paramètres $\boldsymbol{\mu}$ et $\boldsymbol{\Sigma}$ ne \textbf{sont pas} la moyenne et la variance de $\mathcal{A}(\alpha, \boldsymbol{\mu}, \boldsymbol{\Sigma})$ 
+- Ils s'en rapprochent lorsque $\alpha$ tend vers $0$. 
+- Il existe une autre paramétrisation, plus générale, de la densité (voir poly). 
+:::
+:::
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+La simulation est compliquée mais il existe des routines numériques dans `compositions::rAitchison()`
+:::
+
+## Illustrations ($\alpha = 1$ et $\alpha = 5$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Loi de Aitchison de mêmes paramètres de (quasi-)moyenne et (quasi-)variance avec $\\alpha =1$ (gauche) et $\\alpha = 5$ (droite). La moyenne empirique (x) est très différente de $\\mu$ (+). Les isocontours sont ceux de la gaussienne."
+set.seed(2251)
+par(mar=c(2,1,1,1))
+par(mfrow = c(1, 2))
+n <- 200
+mu <- c(1, 2, 3)
+var <- matrix(c(1,-.5,-.5,1),ncol=2)
+cmu = acomp(mu)
+cvar = ilrvar2clr(var)
+# plot 1
+alpha = 1
+xr <- rAitchison(n = n, alpha = alpha, mu = cmu, sigma = cvar)
+plot(cmu,pch="+", cex = 2, labels = c("x", "y", "z"), col = "blue")
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(cmu,cvar,r, col="grey")
+}
+plot(ilr(xr) %>% colMeans() %>% ilrInv(), pch = "x", cex = 2, add = TRUE, col = "red")
+plot(xr,pch=19,cex=0.5,add=TRUE)
+# plot 2
+alpha = 5
+xr <- rAitchison(n = n, alpha = alpha, mu = cmu, sigma = cvar)
+plot(cmu,pch="+", cex = 2, labels = c("x", "y", "z"), col = "blue")
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(cmu,cvar,r, col="grey")
+}
+plot(ilr(xr) %>% colMeans() %>% ilrInv(), pch = "x", cex = 2, add = TRUE, col = "red")
+plot(xr,pch=19,cex=0.5,add=TRUE)
+```
+
+## Illustrations ($\alpha = 1$ et $\alpha = 0.3$)
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Loi de Aitchison de mêmes paramètres de (quasi-)moyenne et (quasi-)variance avec $\\alpha =1$ (gauche) et $\\alpha = 0.3$ (droite). La moyenne empirique (x) est très différente de $\\mu$ (+). Les isocontours sont ceux de la gaussienne."
+set.seed(2251)
+par(mar=c(2,1,1,1))
+par(mfrow = c(1, 2))
+n <- 200
+mu <- c(1, 2, 3)
+var <- matrix(c(1,-.5,-.5,1),ncol=2)
+cmu = acomp(mu)
+cvar = ilrvar2clr(var)
+# plot 1
+alpha = 1
+xr <- rAitchison(n = n, alpha = alpha, mu = cmu, sigma = cvar)
+plot(cmu,pch="+", cex = 2, labels = c("x", "y", "z"), col = "blue")
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(cmu, cvar,r, col="grey")
+}
+plot(ilr(xr) %>% colMeans() %>% ilrInv(), pch = "x", cex = 2, add = TRUE, col = "red")
+plot(xr,pch=19,cex=0.5,add=TRUE)
+# plot 2
+alpha = 0.3
+xr <- rAitchison(n = n, alpha = alpha, mu = cmu, sigma = cvar)
+plot(cmu,pch="+", cex = 2, labels = c("x", "y", "z"), col = "blue")
+for(p in c(0.5,1:9,9.5)/10) {
+  r = sqrt(qchisq(p=p,df=2))
+  ellipses(cmu, cvar,r, col="grey")
+}
+plot(ilr(xr) %>% colMeans() %>% ilrInv(), pch = "x", cex = 2, add = TRUE, col = "red")
+plot(xr,pch=19,cex=0.5,add=TRUE)
+```
 
 ## Références
