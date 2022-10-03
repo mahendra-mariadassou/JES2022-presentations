@@ -12,7 +12,6 @@ format:
     chalkboard: 
       buttons: true
     preview-links: auto
-editor: visual
 ---
 
 ```{r}
