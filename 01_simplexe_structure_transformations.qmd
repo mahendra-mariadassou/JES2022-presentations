@@ -346,7 +346,7 @@ On vérifie aisément que $<., .>_A$ est symétrique. L'égalité suivante montr
 $$
 \begin{align}
 <\vect{x} \oplus \alpha \odot \vect{z}, \vect{y}>_A & = \frac{1}{2D} \sum_{j=1}^D \sum_{j' = 1}^D \log \frac{x_j z_j^\alpha}{x_{j'} z_{j'}^\alpha} \log \frac{y_j}{y_{j'}} \\ 
- &= \frac{1}{2D} \sum_{j=1}^D \sum_{j' = 1}^D \log \left( \frac{x_j}{x_{j'}} + \alpha \frac{z_j}{z_{j'}}\right)  \log \frac{y_j}{y_{j'}} \\ 
+ &= \frac{1}{2D} \sum_{j=1}^D \sum_{j' = 1}^D \left[ \log \left(\frac{x_j}{x_{j'}}\right) + \alpha \log \left(\frac{z_j}{z_{j'}}\right) \right] \log \frac{y_j}{y_{j'}} \\ 
  & = <\vect{x}, \vect{y}>_A + \alpha <\vect{z}, \vect{y}>_A.
 \end{align}
 $$
@@ -371,7 +371,7 @@ $(\CS^D, <., .>_A)$ est un espace euclidien de dimension $D-1$. Il dispose donc 
 ### Boule
 La boule $\mathcal{B}_R(\vect{c})$ de rayon $R$ et de centre $\vect{c}$ est définie par:
 $$
- \mathcal{B}_R(\vect{c}) = \{ \vect{x} \in \CS^D \text{ t.q.} \parallel \vect{x} \ominus \vect{y} \parallel_A \leq R\}
+ \mathcal{B}_R(\vect{c}) = \{ \vect{x} \in \CS^D \text{ t.q.} \parallel \vect{x} \ominus \vect{c} \parallel_A \leq R\}
 $$
 :::
 
@@ -641,7 +641,7 @@ $$
 ::: {#prp-alr}
 $\alr_j$ est un **isomorphisme** de $(\CS^{D}, \oplus, \odot)$ dans $(\RR^{D-1}, +, \times)$. En particulier, pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
 $$
-\alr(\vect{x} \oplus \vect{y}) = \text{alr}_j(\vect{x}) + \text{alr}_j(\vect{y}) \quad \text{et} \quad \alr(\alpha \odot \vect{x}) = \alpha \text{alr}_j(\vect{x})
+\alr_j(\vect{x} \oplus \vect{y}) = \text{alr}_j(\vect{x}) + \text{alr}_j(\vect{y}) \quad \text{et} \quad \alr_j(\alpha \odot \vect{x}) = \alpha \text{alr}_j(\vect{x})
 $$
 :::
 
@@ -651,8 +651,8 @@ $$
 La transformation $\text{alr}_j^{-1}$ est définie par:
 $$
  \begin{align*}
-  \vect{x} \in \RR^{D-1} \mapsto \text{alr}_j^{-1}(\vect{x}) & = \CC(e^{x_1}, \dots, e^{x_{j-1}}, 1, e^{x_{j+1}}, \dots, e^{x_D}) \\
-  & = \left[ \frac{e^{x_1}}{1 + \sum_{j' \neq j} e^{x_{j'}}}, \dots, \frac{e^{x_D}}{1 + \sum_{j' \neq j} e^{x_{j'}}} \right]\in \CS^D
+  \vect{x}^\star \in \RR^{D-1} \mapsto \text{alr}_j^{-1}(\vect{x}^\star) & = \CC(e^{x_1^\star}, \dots, e^{x^\star_{j-1}}, 1, e^{x^\star_{j+1}}, \dots, e^{x^\star_D}) \\
+  & = \left[ \frac{e^{x^\star_1}}{1 + \sum_{j' \neq j} e^{x^\star_{j'}}}, \dots, \frac{e^{x^\star_D}}{1 + \sum_{j' \neq j} e^{x^\star_{j'}}} \right]\in \CS^D
  \end{align*}
 $$
 :::
@@ -758,7 +758,7 @@ $$
 $\clr$ est un **morphisme isométrique**. Pour tout $\vect{x}, \vect{y} \in \CS^D, \alpha \in \RR$
 $$
 \begin{align}
-\clr(\vect{x} \oplus \vect{y}) = \text{clr}_j(\vect{x}) + \text{clr}_j(\vect{y}) & \quad \text{et} \quad \clr(\alpha \odot \vect{x}) = \alpha \text{clr}_j(\vect{x}) \\
+\clr(\vect{x} \oplus \vect{y}) = \text{clr}_j(\vect{x}) + \text{clr}_j(\vect{y}) & \quad \text{et} \quad \clr(\alpha \odot \vect{x}) = \alpha \text{clr}(\vect{x}) \\
 \langle \vect{x}, \vect{y} \rangle_A = \clr(\vect{x})^T \clr(\vect{y}) & \quad \text{et} \quad \| \vect{x} \|_A = \| \clr(\vect{x}) \|
 \end{align}
 $$
@@ -770,7 +770,7 @@ $$
 La transformation $\text{clr}^{-1}$, aussi appelé *softmax*, est définie par:
 $$
  \begin{align*}
-  \vect{x} \in \RR^D \mapsto \text{clr}^{-1}(\vect{x}) = \CC(e^{x_1}, \dots, e^{x_D}) = \left[ \frac{e^{x_1}}{\sum_{j=1}^D e^{x_j}}, \dots, \frac{e^{x_D}}{\sum_{j=1}^D e^{x_j}} \right]\in \CS^D
+  \vect{x}^\star \in \RR^D \mapsto \text{clr}^{-1}(\vect{x}^\star) = \CC(e^{x^\star_1}, \dots, e^{x^\star_D}) = \left[ \frac{e^{x^\star_1}}{\sum_{j=1}^D e^{x^\star_j}}, \dots, \frac{e^{x^\star_D}}{\sum_{j=1}^D e^{x^\star_j}} \right]\in \CS^D
  \end{align*}
 $$
 Elle est invariante par translation par un multiple de $\vect{1}_D$
@@ -782,7 +782,7 @@ Elle est invariante par translation par un multiple de $\vect{1}_D$
 - La transformation $\clr$ n'a pas de composante de référence, c'est la moyenne géométrique $g(\vect{x})$ qui joue ce rôle.
 - Le vecteur $\clr(\vect{x})$ a **$D$** composantes et pas $D-1$
 - La transformation $\clr$ n'est **pas surjective**: toutes les valeurs de $\RR^D$ ne sont pas atteintes.
-- Plus précisément, tous les vecteurs $\clr(\vect{x})$ sont *centrés* ($\clr(\vect{x})^T \vect{1}_D = 0$) et $\clr$ est bijective entre $\CS^D$ et $H = \{ \vect{x} \in \RR^D: \vect{x}^T \vect{1}_D = 0\}$
+- Plus précisément, tous les vecteurs $\clr(\vect{x})$ sont *centrés* ($\clr(\vect{x})^T \vect{1}_D = 0$) et $\clr$ est bijective entre $\CS^D$ et $H = \{ \vect{x}^\star \in \RR^D:\vect{1}_D^T \vect{x}^\star = 0\}$
 :::
 
 . . .
@@ -797,7 +797,7 @@ C'est le principe des transformations $\ilr$ [@egozcue2003isometric]
 
 ## Coordonnées ilr {.smaller}
 
-Soit $\mathcal{V} = (\vect{v}_1, \dots, \vect{v}_{D-1})$ une base orthonornormée de $H$ et $\vect{V} = \left[ \vect{v}_1, \dots, \vect{v}_{D_1} \right]$ la matrice correspondante. 
+Soit $\mathcal{V} = (\vect{v}_1, \dots, \vect{v}_{D-1})$ une base orthonornormée de $H$ et $\vect{V} = \left[ \vect{v}_1, \dots, \vect{v}_{D-1} \right]$ la matrice de taille $D \times (D-1)$ correspondante. 
 
 ::: {#def-ilr}
 La transformation ilr de base $\vect{V}$ est définie par:
@@ -819,9 +819,9 @@ $\ilr_V$ est un **isomorphisme isométrique** de $\CS^D$ dans $\RR^{D-1}$ et vé
 ::: {#prp-ilr-inverse}
 La transformation $\text{ilr}^{-1}$ est définie par:
 $$
-  \vect{x} \in \RR^{D-1} \mapsto \text{ilr}_{\vect{V}}^{-1}(\vect{x}) = \CC(\exp(\vect{V}\vect{x})) \in \CS^D
+  \vect{x}^\star \in \RR^{D-1} \mapsto \text{ilr}_{\vect{V}}^{-1}(\vect{x}^\star) = \CC(\exp(\vect{V}\vect{x}^\star)) \in \CS^D
 $$
-où la fonction exponentielle est appliquée terme à terme à $\vect{x}$.  
+où la fonction exponentielle est appliquée terme à terme à $\vect{x}^\star$.  
 :::
 
 ## Coordonnées ilr: illustrations {.smaller}
@@ -928,7 +928,7 @@ p_circles_ilr +
 ::: {.fragment}
 Pour $\alr_D$, 
 $$
-\vect{A} = \vect{F}_D = [\vect{I}_{D-1} \; -\vect{1}_{D-1}^T]
+\vect{A} = \vect{F}_D = [\vect{I}_{D-1} | -\vect{1}_{D-1}]
 $$
 :::
 ::::
