@@ -585,7 +585,7 @@ $$
 \tilde{x}_{j} = 
             \begin{cases}
             x_{j} & \text{ si } x_{j} > 0 \\
-            s_j \frac{A}{N + A} & \text{ sinon} \\
+            t_j \frac{S}{N + S} & \text{ sinon} \\
             \end{cases}
 $$
 :::
