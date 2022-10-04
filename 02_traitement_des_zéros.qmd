@@ -110,7 +110,7 @@ Si un poisson n'est jamais capturé en un site, sa composante est à $0$, comme 
 ## Origine : limites de détection {.smaller}
 
 ::: {.fragment fragment-index="1"}
-Données issues de Les 0 peuvent aussi apparaîtrent à cause de **limites de détection** (concentration trop faible pour être mesurée). On parle alors de **censure à gauche.**
+Les 0 peuvent aussi apparaîtrent à cause de **limites de détection** (concentration trop faible pour être mesurée). On parle alors de **censure à gauche.**
 :::
 
 ::: columns
@@ -410,9 +410,11 @@ $$
 
 ::: {.column width="40%"}
 ::: fragment
-3.  en repassant à une composition $$
-    \tilde{\vect{x}} = \alr_j^{-1}(\tilde{\vect{y}})
-    $$
+3.  en repassant aux composantes
+
+$$
+\tilde{x}_j = x_{j_0}\exp(y_j)    
+$$
 :::
 
 ::: fragment
@@ -478,7 +480,7 @@ On suppose que les comptages sont issus d'un **modèle hiérarchique Dirichlet-M
 $$
 \begin{align*}
  \vect{x} \sim & \mathcal{D}(1, \boldsymbol{\alpha}) \\
- \vect{c} \sim & \mathcal{M}(N, \boldsymbol{\alpha})
+ \vect{c} | \vect{x} \sim & \mathcal{M}(N, \vect{x})
 \end{align*}
 $$
 
