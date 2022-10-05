@@ -448,6 +448,48 @@ $\vect{V}$ est la base pivot usuelle et on considère $\rho \in \{-1.5, 0, 1.5\}
 ::::
 :::::
 
+```{r}
+## Tracer des points normaux dans le simplexe
+plot_sn <- function(mu, var, n) {
+  rsamples <- MASS::mvrnorm(n, mu = ilr(mu), Sigma = var)
+  ## Plot 1
+  mymn = acomp(mu)
+  myvr = ilrvar2clr(var)
+  plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+  for(p in c(0.5,1:9,9.5)/10){
+    r = sqrt(qchisq(p=p,df=2))
+    ellipses(mymn,myvr,r, col="grey")
+  }
+  xr <- ilrInv(rsamples)
+  plot(xr, add=TRUE, pch=19, cex=0.5)  
+}
+## Graphique joint simplexe / ilr
+plot_sn_and_ilr <- function(mu, var, n) {
+  rsamples <- MASS::mvrnorm(n, mu = ilr(mu), Sigma = var)
+  ## Plot 1
+  mymn = acomp(mu)
+  myvr = ilrvar2clr(var)
+  plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
+  for(p in c(0.5,1:9,9.5)/10){
+    r = sqrt(qchisq(p=p,df=2))
+    ellipses(mymn,myvr,r, col="grey")
+  }
+  xr <- ilrInv(rsamples)
+  plot(xr, add=TRUE, pch=19, cex=0.5)
+  ## Plot 2
+  plot(rsamples, pch=19, cex=0.5, asp = 1)
+  points(x = ilr(mu)[1], y = ilr(mu)[2],
+         pch="+", cex = 2
+         # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
+  )
+  for(p in c(0.5,1:9,9.5)/10) {
+    r = sqrt(qchisq(p=p,df=2))
+    ellipses(ilr(mu),var,r, col="grey")
+  }
+}
+```
+
+
 ## Illustrations ($\rho = -1.5$)
 
 ```{r}
@@ -455,33 +497,10 @@ $\vect{V}$ est la base pivot usuelle et on considère $\rho \in \{-1.5, 0, 1.5\}
 #| fig-height: 5
 #| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
 set.seed(378)
-opar <- par(mar=c(2,1,1,1))
+par(mar=c(2,1,1,1), mfrow = c(1, 2))
 mu <- c(1, 1, 1)
 var <- matrix(c(2, -1.5, -1.5, 2),ncol=2)
-rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
-mymn = acomp(mu)
-myvr = ilrvar2clr(var)
-par(mfrow = c(1, 2))
-## Plot 1
-plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
-for(p in c(0.5,1:9,9.5)/10){
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(mymn,myvr,r, col="grey")
-}
-# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
-xr <- ilrInv(rsamples)
-plot(xr, add=TRUE, pch=19, cex=0.5)
-## Plot 2
-plot(rsamples, pch=19, cex=0.5)
-points(x = ilr(mu)[1], y = ilr(mu)[2],
-     pch="+", cex = 2
-     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
-     )
-for(p in c(0.5,1:9,9.5)/10) {
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(ilr(mu),var,r, col="grey")
-}
-par(opar)
+plot_sn_and_ilr(mu, var, 100)
 ```
 
 ## Illustrations ($\rho = 0$)
@@ -491,33 +510,10 @@ par(opar)
 #| fig-height: 5
 #| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
 set.seed(378)
-opar <- par(mar=c(2,1,1,1))
+opar <- par(mar=c(2,1,1,1), mfrow = c(1, 2))
 mu <- c(1, 1, 1)
 var <- matrix(c(2, 0, 0, 2),ncol=2)
-rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
-mymn = acomp(mu)
-myvr = ilrvar2clr(var)
-par(mfrow = c(1, 2))
-## Plot 1
-plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
-for(p in c(0.5,1:9,9.5)/10){
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(mymn,myvr,r, col="grey")
-}
-# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
-xr <- ilrInv(rsamples)
-plot(xr, add=TRUE, pch=19, cex=0.5)
-## Plot 2
-plot(rsamples, pch=19, cex=0.5)
-points(x = ilr(mu)[1], y = ilr(mu)[2],
-     pch="+", cex = 2
-     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
-     )
-for(p in c(0.5,1:9,9.5)/10) {
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(ilr(mu),var,r, col="grey")
-}
-par(opar)
+plot_sn_and_ilr(mu, var, 100)
 ```
 
 ## Illustrations ($\rho = 1.5$)
@@ -527,33 +523,48 @@ par(opar)
 #| fig-height: 5
 #| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
 set.seed(378)
-opar <- par(mar=c(2,1,1,1))
+opar <- par(mar=c(2,1,1,1), mfrow = c(1, 2))
 mu <- c(1, 1, 1)
 var <- matrix(c(2, 1.5, 1.5, 2),ncol=2)
-rsamples <- MASS::mvrnorm(100, mu = ilr(mu), Sigma = var)
-mymn = acomp(mu)
-myvr = ilrvar2clr(var)
-par(mfrow = c(1, 2))
-## Plot 1
-plot(mymn,pch="+", labels = c("x", "y", "z"), cex = 2)
-for(p in c(0.5,1:9,9.5)/10){
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(mymn,myvr,r, col="grey")
-}
-# xr = rnorm.acomp(n=30, mean=mymn, var=myvr)
-xr <- ilrInv(rsamples)
-plot(xr, add=TRUE, pch=19, cex=0.5)
-## Plot 2
-plot(rsamples, pch=19, cex=0.5)
-points(x = ilr(mu)[1], y = ilr(mu)[2],
-     pch="+", cex = 2
-     # xlim = c(-3.5, 3.5), ylim = c(-3.5, 3.5)
-     )
-for(p in c(0.5,1:9,9.5)/10) {
-  r = sqrt(qchisq(p=p,df=2))
-  ellipses(ilr(mu),var,r, col="grey")
-}
-par(opar)
+plot_sn_and_ilr(mu, var, 100)
+```
+## Illustrations $\mathbb{E}^{\oplus}[\vect{X}] = (1/6, 1/3, 1/2)$ et $\rho = -1.5$
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1), mfrow = c(1, 2))
+mu <- c(1, 2, 3)
+var <- matrix(c(2, -1.5, -1.5, 2),ncol=2)
+plot_sn_and_ilr(mu, var, 200)
+```
+
+## Illustrations $\mathbb{E}^{\oplus}[\vect{X}] = (1/6, 1/3, 1/2)$ et $\rho = 0$
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1), mfrow = c(1, 2))
+mu <- c(1, 2, 3)
+var <- matrix(c(2, 0, 0, 2),ncol=2)
+plot_sn_and_ilr(mu, var, 200)
+```
+
+## Illustrations $\mathbb{E}^{\oplus}[\vect{X}] = (1/6, 1/3, 1/2)$ et $\rho = 1.5$
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| fig-cap: "Moyenne de la distribution ($+$) et isocontours (-)"
+set.seed(378)
+opar <- par(mar=c(2,1,1,1), mfrow = c(1, 2))
+mu <- c(1, 2, 3)
+var <- matrix(c(2, 1.5, 1.5, 2),ncol=2)
+plot_sn_and_ilr(mu, var, 200)
 ```
 
 # Loi elliptique sur le simplexe
